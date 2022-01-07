@@ -1,0 +1,12 @@
+[submodule ".dotfiles/zsh/zsh-autosuggestions"]
+	path = .dotfiles/zsh/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git
+[submodule ".dotfiles/zsh/powerlevel10k"]
+	path = .dotfiles/zsh/powerlevel10k
+	url = https://gitee.com/romkatv/powerlevel10k.git
+[submodule ".cfg/zsh/powerlevel10k"]
+	path = .cfg/zsh/powerlevel10k
+	url = https://gitee.com/romkatv/powerlevel10k.git
+[submodule ".cfg/zsh/zsh-autosuggestions"]
+	path = .cfg/zsh/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git
