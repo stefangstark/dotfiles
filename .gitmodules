@@ -10,3 +10,6 @@
 [submodule ".cfg/zsh/zsh-autosuggestions"]
 	path = .cfg/zsh/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
+[submodule "/Users/starks/.dotfiles/zsh/zsh-history-substring-search"]
+	path = /Users/starks/.dotfiles/zsh/zsh-history-substring-search
+	url = git@github.com:zsh-users/zsh-history-substring-search.git
