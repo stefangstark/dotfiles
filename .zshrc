@@ -63,19 +63,3 @@ bindkey -M vicmd v edit-command-line
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=white,bold'
-
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/starks/software/anaconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/starks/software/anaconda/etc/profile.d/conda.sh" ]; then
-        . "/Users/starks/software/anaconda/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/starks/software/anaconda/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
