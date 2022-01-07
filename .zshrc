@@ -36,3 +36,5 @@ source $ZSH/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f $ZSH/.p10k.zsh ]] || source $ZSH/.p10k.zsh
 
 source $ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+source $ZSH/zsh-history-substring-search/zsh-history-substring-search.zsh
