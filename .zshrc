@@ -36,5 +36,21 @@ source $ZSH/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f $ZSH/.p10k.zsh ]] || source $ZSH/.p10k.zsh
 
 source $ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 source $ZSH/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+export PATH="/Users/starks/software/anaconda/bin:${PATH}"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/starks/software/anaconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/starks/software/anaconda/etc/profile.d/conda.sh" ]; then
+        . "/Users/starks/software/anaconda/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/starks/software/anaconda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
