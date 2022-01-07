@@ -36,6 +36,7 @@ set foldcolumn=0
 set backspace=eol,start,indent " make backspace work as it should
 set whichwrap+=<,>,h,l
 set noshowmode
+set term=screen-256color
 
 " Colorscheme
 set background=dark
