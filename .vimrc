@@ -41,6 +41,29 @@ set noshowmode
 set background=dark
 colorscheme peaksea
 
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove 
+map <leader>t<leader> :tabnext 
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Let 'tl' toggle between this and the last accessed tab
+let g:lasttab = 1
+nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -88,6 +111,11 @@ let g:ale_linters = {
 \   'go': ['go', 'golint', 'errcheck']
 \}
 
+let g:ale_fixers = {
+\   'sh': ['shfmt'],
+\}
+let g:shfmt_extra_args = '-i 2'
+
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
 
 " Disabling highlighting
@@ -96,3 +124,33 @@ let g:ale_set_highlights = 0
 " Only run linting when saving the file
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 1
+
+" Reformat long commands in history
+function! FormatBashLine()
+    silent! %s:\v\s+: :g
+    " Iterative blocking for/while loops
+    silent! %s:\v(^\s*)(.{-}%(while|for) .{-} do) (.*)done:\1\2\r\1    \3\r\1done:
+    silent! %s:\v(^\s*)(.{-}%(while|for) .{-} do) (.*)done:\1\2\r\1    \3\r\1done:
+    silent! %s:\v(^\s*)(.{-}%(while|for) .{-} do) (.*)done:\1\2\r\1    \3\r\1done:
+    silent! %s:\v(^\s*)(.{-}%(while|for) .{-} do) (.*)done:\1\2\r\1    \3\r\1done:
+    silent! %s:\v(^\s*)(.{-}%(while|for) .{-} do) (.*)done:\1\2\r\1    \3\r\1done:
+
+    " Replace pipes
+    silent! %s:\v(^(\s*).*)@<=(\|):\\\r\2\3:g
+
+    " Break flags on long lines
+    silent! g:^.\{70,\}:s:\v(^(\s*).*\s)@<=(--?):\\BREAK\2    \3:g
+    silent! %s:BREAK:\r:g
+    setf sh
+
+endfunction
+
+
+function! UnFormatBashLine()
+    silent! %s:\\::g
+    silent! %s:\v\n\s*: :g 
+    silent! %s: \{2,}: :
+endfunction
+
+map <buffer> <leader>v :call FormatBashLine()<CR>
+map <buffer> <leader>q :call UnFormatBashLine() <bar> :wq <CR>
