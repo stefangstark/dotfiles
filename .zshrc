@@ -25,6 +25,7 @@ _comp_options+=(globdots)        # Include hidden files.
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
+bindkey "^?" backward-delete-char
 
 alias ll='ls -lhG'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
