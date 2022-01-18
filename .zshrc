@@ -5,8 +5,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export LS_COLORS="di=1;36:ln=1;97:or=1;31"
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# dotfile management
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH=$HOME/.dotfiles/zsh
@@ -20,8 +20,10 @@ antigen theme romkatv/powerlevel10k powerlevel10k
 antigen apply
 
 export TERM="xterm-256color"
+export LS_COLORS="di=1;36:ln=1;97:or=1;31"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 alias ll='ls -lhG --color'
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
 
 ###############################################################
 # => auto complete 
