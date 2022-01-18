@@ -63,6 +63,8 @@ bindkey -M vicmd v edit-command-line
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=white,bold'
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+
 
 
 # >>> conda initialize >>>
@@ -79,3 +81,18 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+
+################################################################
+# => direnv 
+################################################################
+eval "$(direnv hook zsh)"
+export DIRENV_LOG_FORMAT=
+
+
+################################################################
+# => ethsec connection 
+################################################################
+proxy () {
+    .env_bootstrap/scripts/connect_cluster_with_http_proxy -H ethsec
+}

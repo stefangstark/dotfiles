@@ -106,15 +106,13 @@ let g:lightline = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 highlight clear SignColumn
 let g:ale_linters = {
-\   'javascript': ['jshint'],
 \   'python': ['flake8'],
-\   'go': ['go', 'golint', 'errcheck']
 \}
 
 let g:ale_fixers = {
+\   '*': ['trim_whitespace', 'remove_trailing_lines'],
 \   'sh': ['shfmt'],
 \}
-let g:shfmt_extra_args = '-i 2'
 
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
 
@@ -147,7 +145,7 @@ endfunction
 
 
 function! UnFormatBashLine()
-    silent! %s:\\::g
+    silent! %s:\\$::g
     silent! %s:\v\n\s*: :g 
     silent! %s: \{2,}: :
 endfunction
