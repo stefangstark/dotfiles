@@ -5,8 +5,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# export LS_COLORS="di=1;36:ln=1;97:or=1;31"
-# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+export LS_COLORS="di=1;36:ln=1;97:or=1;31"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH=$HOME/.dotfiles/zsh
