@@ -5,10 +5,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+export LS_COLORS="di=1;36:ln=1;97:or=1;31"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH=$HOME/.dotfiles/zsh
 export ADOTDIR=$ZSH/.antigen
 
+autoload -U compinit && compinit
 source $ZSH/antigen.zsh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
@@ -16,7 +20,7 @@ antigen theme romkatv/powerlevel10k powerlevel10k
 antigen apply
 
 export TERM="xterm-256color"
-alias ll='ls -lhG'
+alias ll='ls -lhG --color'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 ###############################################################
@@ -65,17 +69,11 @@ bindkey '^[[B' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=white,bold'
 
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/starks/software/anaconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/starks/software/anaconda/etc/profile.d/conda.sh" ]; then
-        . "/Users/starks/software/anaconda/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/starks/software/anaconda/bin:$PATH"
-    fi
+###############################################################
+# => contextual tmux aliases
+###############################################################
+if [[ $TMUX ]]; then
+    session=$(tmux display-message -p '#S')
+    [ -f .dotfiles/tmux/${session} ] && source .dotfiles/tmux/$session
 fi
-unset __conda_setup
-# <<< conda initialize <<<
+
