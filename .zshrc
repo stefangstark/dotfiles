@@ -8,7 +8,7 @@ fi
 # dotfile management
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$PATH:$HOME/bin:/usr/local/bin
 export ZSH=$HOME/.dotfiles/zsh
 export ADOTDIR=$ZSH/.antigen
 
@@ -24,6 +24,11 @@ export LS_COLORS="di=1;36:ln=1;97:or=1;31"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 alias ll='ls -lhG --color'
 
+
+###############################################################
+# => tmux
+###############################################################
+ts () { tmux attach -dt $1 || tmux new -s $1 }
 
 ###############################################################
 # => auto complete 
@@ -70,12 +75,4 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=white,bold'
 
-
-###############################################################
-# => contextual tmux aliases
-###############################################################
-if [[ $TMUX ]]; then
-    session=$(tmux display-message -p '#S')
-    [ -f .dotfiles/tmux/${session} ] && source .dotfiles/tmux/$session
-fi
-
+source ~/.dotfiles/zsh/local
