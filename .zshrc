@@ -6,10 +6,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export ZSH=$HOME/.dotfiles/zsh
-export ADOTDIR=$ZSH/.antigen
+export CFG=$HOME/.dotfiles
+export ADOTDIR=$CFG/zsh/.antigen
 
-source $ZSH/antigen.zsh
+source $CFG/zsh/antigen.zsh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 antigen theme romkatv/powerlevel10k powerlevel10k
@@ -18,6 +18,8 @@ antigen apply
 export TERM="xterm-256color"
 alias ll='ls -lhG'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+[ -f $CFG/zsh/local ] && source $CFG/zsh/local
 
 ###############################################################
 # => auto complete 
@@ -54,7 +56,7 @@ bindkey -M vicmd v edit-command-line
 ###############################################################
 # => powerlevel10k
 ###############################################################
-[[ ! -f $ZSH/.p10k.zsh ]] || source $ZSH/.p10k.zsh
+[[ ! -f $CFG/zsh/.p10k.zsh ]] || source $CFG/zsh/.p10k.zsh
 
 
 ###############################################################
@@ -66,33 +68,9 @@ HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=white,bold'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/starks/software/anaconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/starks/software/anaconda/etc/profile.d/conda.sh" ]; then
-        . "/Users/starks/software/anaconda/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/starks/software/anaconda/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-
 ################################################################
 # => direnv 
 ################################################################
 eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=
 
-
-################################################################
-# => ethsec connection 
-################################################################
-proxy () {
-    .env_bootstrap/scripts/connect_cluster_with_http_proxy -H ethsec
-}
