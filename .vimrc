@@ -48,6 +48,9 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove 
 map <leader>t<leader> :tabnext 
 
+" Turn off search hl
+set nohlsearch
+
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
 map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
@@ -62,6 +65,16 @@ au TabLeave * let g:lasttab = tabpagenr()
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
+
+" Return to last edit position when opening files
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Persistant undo
+try
+    set undodir=~/.cache/vim/undodir
+    set undofile
+catch
+endtry
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -106,15 +119,13 @@ let g:lightline = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 highlight clear SignColumn
 let g:ale_linters = {
-\   'javascript': ['jshint'],
 \   'python': ['flake8'],
-\   'go': ['go', 'golint', 'errcheck']
 \}
 
 let g:ale_fixers = {
+\   '*': ['trim_whitespace', 'remove_trailing_lines'],
 \   'sh': ['shfmt'],
 \}
-let g:shfmt_extra_args = '-i 2'
 
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
 
@@ -147,7 +158,7 @@ endfunction
 
 
 function! UnFormatBashLine()
-    silent! %s:\\::g
+    silent! %s:\\$::g
     silent! %s:\v\n\s*: :g 
     silent! %s: \{2,}: :
 endfunction

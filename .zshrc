@@ -9,11 +9,10 @@ fi
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export ZSH=$HOME/.dotfiles/zsh
-export ADOTDIR=$ZSH/.antigen
+export CFG=$HOME/.dotfiles
+export ADOTDIR=$CFG/zsh/.antigen
 
-autoload -U compinit && compinit
-source $ZSH/antigen.zsh
+source $CFG/zsh/antigen.zsh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 antigen theme romkatv/powerlevel10k powerlevel10k
@@ -24,6 +23,8 @@ export LS_COLORS="di=1;36:ln=1;97:or=1;31"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 alias ll='ls -lhG --color'
 
+
+[ -f $CFG/zsh/local ] && source $CFG/zsh/local
 
 ###############################################################
 # => auto complete 
@@ -60,7 +61,7 @@ bindkey -M vicmd v edit-command-line
 ###############################################################
 # => powerlevel10k
 ###############################################################
-[[ ! -f $ZSH/.p10k.zsh ]] || source $ZSH/.p10k.zsh
+[[ ! -f $CFG/zsh/.p10k.zsh ]] || source $CFG/zsh/.p10k.zsh
 
 
 ###############################################################
@@ -69,13 +70,12 @@ bindkey -M vicmd v edit-command-line
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=white,bold'
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 
-###############################################################
-# => contextual tmux aliases
-###############################################################
-if [[ $TMUX ]]; then
-    session=$(tmux display-message -p '#S')
-    [ -f .dotfiles/tmux/${session} ] && source .dotfiles/tmux/$session
-fi
+################################################################
+# => direnv 
+################################################################
+eval "$(direnv hook zsh)"
+export DIRENV_LOG_FORMAT=
 
