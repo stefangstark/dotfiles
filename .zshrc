@@ -31,6 +31,17 @@ alias ll='ls -lhG --color'
 ###############################################################
 ts () { tmux attach -dt $1 || tmux new -s $1 }
 
+# contextual tmux aliases
+if [[ -e $(echo $TMUX | cut -f 1 -d,) ]]; then
+    export TMUX_SESSION_NAME=$(tmux display-message -p '#S')
+fi
+
+if [[ -n $TMUX_SESSION_NAME ]]; then
+    tmux_session_alias=$CFG/tmux/$TMUX_SESSION_NAME
+    [ -f $tmux_session_alias ] && source $tmux_session_alias
+fi
+
+
 ###############################################################
 # => auto complete 
 ###############################################################
