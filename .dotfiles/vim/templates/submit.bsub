@@ -1,0 +1,165 @@
+#! /bin/bash
+
+# You likely need to set these
+jobname='jobname'
+defaults=$(cat <<EOF
+#BSUB -W 4:00
+#BSUB -R rusage[mem=1G]
+
+EOF
+)
+
+
+# You might want to set these
+name=$(basename ${0%.bsub})
+script="python $(dirname $0)/${name}.py"
+env=${CONDA_DEFAULT_ENV:-base}
+
+
+# Everything else should be fine
+subid=$(date +"%Y-%m-%d")
+logdir=$(dirname $0)/logs/${name}/${subid}
+
+# There are two modes to the script:
+#   batch mode submits a single job:
+#     $ ./script.bsub | bsub
+#
+#   array mode submits many commands as a job array
+#     $ cat commands | script.bsub | bsub
+#  
+#  The script runs in array mode if /dev/stdin is not empty
+#  (i.e. something is piped)
+#
+#  You can specify addl args at each pipe:
+#    * options passed to `bsub` will overwrite job requirement defaults
+#    * args passed to `script.bsub` are forwarded to the underlying script 
+#       however, -J -N -I -P are used by this script and NOT passed!
+#
+#  If you are running in array mode and your jobs are small (<5 mins)
+#  then you will want each job to execute multiple commands. Use:
+#    -N: to split the command list N times
+#    -I: to set the number of commands each job executes
+
+
+# Parse array job handling
+positional=()
+
+# Set mode to array if stdin is not empty
+[[ -t 0 ]] && mode="batch" || mode="array"
+
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+
+        -N)
+        array_length="$2"
+        shift # past argument
+        shift # past value
+        ;;
+
+        -I)
+        ncmds_per_job="$2"
+        shift
+        shift
+        ;;
+
+        -J)
+        jobname="$2"
+        shift
+        shift
+        ;;
+
+        -P)
+        job_slot_limit="$2"
+        shift
+        shift
+        ;;
+
+        *)    # unknown option
+        positional+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+done
+
+# restore positional parameters
+set -- "${positional[@]}" 
+
+if [ $mode == "batch" ]
+then
+
+header=$(cat << EOF
+#BSUB -J ${jobname}
+#BSUB -o ${logdir}
+EOF
+)
+
+submission=$(cat << EOF
+source activate ${env}
+${script} $@
+EOF
+)
+
+else 
+# --------------------- Job array mode ---------------
+
+# Choose a random tag to store commands
+tag=$(echo $RANDOM | md5sum | head -c 8)
+root=${HOME}/.commands
+commands=${root}/${tag}
+mkdir -p $root
+
+# text piped to script is written to command file
+cp /dev/stdin ${commands}
+
+ncmds=$(wc -l < ${commands})
+if [ -n "$ncmds_per_job" ]; then
+    array_length=$((${ncmds}/${ncmds_per_job}))
+fi
+
+if [ -z "$array_length" ]; then
+    array_length=$ncmds
+fi
+
+if [ "$array_length" -lt "$ncmds" ]
+then # split command file 
+submission=$(cat <<EOF
+source activate ${env}
+split ${commands} -n l/\${LSB_JOBINDEX}/${array_length} | while read cmd; do
+    ${script} \${cmd} $@
+done
+
+exit
+EOF
+)
+
+else # submit each job independently
+submission=$(cat <<-EOF
+source activate ${env}
+${script} \$(sed "\${LSB_JOBINDEX}q;d" ${commands}) $@
+
+exit
+EOF
+)
+
+fi
+
+# Job arary header
+[ -z $job_slot_limit ] && limiter="" || limiter="%${job_slot_limit}"
+header=$(cat <<EOF
+#BSUB -J ${jobname}[1-${array_length}]${limiter}
+#BSUB -o ${logdir}/%J-%I.out
+
+EOF
+)
+
+# ----------------- End job array mode ---------------
+
+fi
+
+mkdir -p ${logdir}
+
+echo "$header"
+echo "$defaults"
+echo
+echo "$submission"

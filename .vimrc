@@ -76,6 +76,9 @@ try
 catch
 endtry
 
+" Open template file
+map <leader>t :r ~/.dotfiles/vim/templates
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
