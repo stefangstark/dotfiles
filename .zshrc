@@ -21,7 +21,7 @@ antigen apply
 export TERM="xterm-256color"
 export LS_COLORS="di=1;36:ln=1;97:or=1;31"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-alias ll='ls -lhG'
+alias ll='ls -lhG --color=auto'
 
 
 [ -f $CFG/zsh/local ] && source $CFG/zsh/local
