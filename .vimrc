@@ -1,15 +1,16 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'crucerucalin/peaksea.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'itchyny/lightline.vim'
-Plugin 'dense-analysis/ale'
-Plugin 'tpope/vim-commentary'
-call vundle#end()
+" First install vim-plug
+let g:plug_url_format = 'git@github.com:%s.git'
+call plug#begin()
+Plug 'vim-scripts/peaksea'
+Plug 'preservim/nerdtree'
+Plug 'itchyny/lightline.vim'
+Plug 'dense-analysis/ale'
+Plug 'tpope/vim-commentary'
+call plug#end()
+
 filetype plugin indent on
 
 syntax on
