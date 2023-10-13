@@ -6,7 +6,7 @@ Add
 ```alias config='/usr/bin/git --git-dir=$HOME/.config-starks-dotfiles/ --work-tree=$HOME'``` to your rc file and run:
 
 ```
-echo ".cfg" >> .gitignore
+echo ".config-starks-dotfiles" >> .gitignore
 git clone --bare git@github.com:stefangstark/dotfiles.git $HOME/.config-starks-dotfiles
 config checkout
 ```
