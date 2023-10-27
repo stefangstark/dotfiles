@@ -5,26 +5,29 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# dotfile management
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+export TERM="xterm-256color"
+export LS_COLORS="di=1;36:ln=1;97:or=1;31"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export CFG=$HOME/.dotfiles
+
+###############################################################
+# => management
+###############################################################
+alias config='/usr/bin/git --git-dir=$HOME/.repo-configs/ --work-tree=$HOME'
+
+export PATH=$PATH:$HOME/bin:/usr/local/bin
+export CFG=$HOME/.config
 export ADOTDIR=$CFG/zsh/.antigen
+
+###############################################################
+# => antigen installs
+###############################################################
 
 source $CFG/zsh/antigen.zsh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 antigen theme romkatv/powerlevel10k powerlevel10k
 antigen apply
-
-export TERM="xterm-256color"
-export LS_COLORS="di=1;36:ln=1;97:or=1;31"
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-alias ll='ls -lhG --color=auto'
-
-
-[ -f $CFG/zsh/local ] && source $CFG/zsh/local
 
 ###############################################################
 # => tmux
@@ -37,10 +40,21 @@ if [[ -e $(echo $TMUX | cut -f 1 -d,) ]]; then
 fi
 
 if [[ -n $TMUX_SESSION_NAME ]]; then
-    tmux_session_alias=$CFG/tmux/$TMUX_SESSION_NAME
+    tmux_session_alias=$CFG/zsh/tmux-envs/$TMUX_SESSION_NAME
     [ -f $tmux_session_alias ] && source $tmux_session_alias
 fi
 
+
+###############################################################
+# => alisases
+###############################################################
+alias ga='git add'
+alias gc='git commit -m'
+alias gs='git status'
+
+alias ll='ls -lhG'
+
+alias vim='nvim'
 
 ###############################################################
 # => auto complete 
@@ -95,3 +109,9 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=
 
+
+################################################################
+# => set local opts
+################################################################
+
+[[ -f $CFG/zsh/local.zsh ]] && source $CFG/zsh/local.zsh
