@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export TERM="xterm-256color"
+# export TERM="xterm-256color"
 export LS_COLORS="di=1;36:ln=1;97:or=1;31"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
@@ -15,7 +15,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ###############################################################
 alias config='/usr/bin/git --git-dir=$HOME/.repo-configs/ --work-tree=$HOME'
 
-export PATH=$PATH:$HOME/bin:/usr/local/bin
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 export CFG=$HOME/.config
 export ADOTDIR=$CFG/zsh/.antigen
 
