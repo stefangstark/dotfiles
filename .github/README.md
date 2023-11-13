@@ -12,5 +12,13 @@ config checkout
 config config --local status.showUntrackedFiles no
 ```
 
+## Install zsh package manager
+[antigen](https://github.com/zsh-users/antigen)
+```
+curl -L git.io/antigen > .config/zsh/antigen.zsh
+```
+
+
+
 ## Setting up nvim
 For now I am using NvChad, it has a lot of out-of-the-box functionality for neovim, but hard to share across envs. You need to install and then copy `.config/nvim/lua/custom` over from local
