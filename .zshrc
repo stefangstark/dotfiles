@@ -15,7 +15,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ###############################################################
 alias config='/usr/bin/git --git-dir=$HOME/.repo-configs/ --work-tree=$HOME'
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/Users/starks/.local/bin:${HOME}/.cargo/bin:$PATH
 export CFG=$HOME/.config
 export ADOTDIR=$CFG/zsh/.antigen
 
@@ -40,7 +40,7 @@ if [[ -e $(echo $TMUX | cut -f 1 -d,) ]]; then
 fi
 
 if [[ -n $TMUX_SESSION_NAME ]]; then
-    tmux_session_alias=$CFG/zsh/tmux-envs/$TMUX_SESSION_NAME
+    tmux_session_alias=$CFG/tmux/envs/$TMUX_SESSION_NAME
     [ -f $tmux_session_alias ] && source $tmux_session_alias
 fi
 
@@ -109,9 +109,31 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=
 
+[ -f .envrc ] && direnv reload
+
 
 ################################################################
 # => set local opts
 ################################################################
 
 [[ -f $CFG/zsh/local.zsh ]] && source $CFG/zsh/local.zsh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/starks/software/anaconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/starks/software/anaconda/etc/profile.d/conda.sh" ]; then
+        . "/Users/starks/software/anaconda/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/starks/software/anaconda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/Users/starks/software/anaconda/etc/profile.d/mamba.sh" ]; then
+    . "/Users/starks/software/anaconda/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+
