@@ -44,6 +44,7 @@ if [[ -n $TMUX_SESSION_NAME ]]; then
     [ -f $tmux_session_alias ] && source $tmux_session_alias
 fi
 
+alias code='tmux rename-window code && cd "${CODEDIR}"'
 
 ###############################################################
 # => alisases
@@ -51,9 +52,7 @@ fi
 alias ga='git add'
 alias gc='git commit -m'
 alias gs='git status'
-
-alias ll='ls -lhG'
-
+alias ll='ls -lhG --color=auto'
 alias vim='nvim'
 
 ###############################################################
