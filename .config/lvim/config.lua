@@ -122,3 +122,5 @@ end, { desc = "Next todo comment" })
 vim.keymap.set("n", "[t", function()
   require("todo-comments").jump_prev()
 end, { desc = "Previous todo comment" })
+
+vim.keymap.set('n', '<cr>', ':noh<cr><cr>', { noremap = true, silent = true })
