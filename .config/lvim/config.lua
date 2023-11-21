@@ -10,6 +10,10 @@ lvim.colorscheme = 'onenord'
 
 -- install plugins
 lvim.plugins = {
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" }
+  },
   "rmehri01/onenord.nvim",
   "AckslD/swenv.nvim",
   "stevearc/dressing.nvim",
@@ -20,34 +24,6 @@ lvim.plugins = {
       require("todo-comments").setup()
     end,
   },
-
---   {
---   "kevinhwang91/nvim-bqf",
---   event = { "BufRead", "BufNew" },
---   config = function()
---   require("bqf").setup({
---           auto_enable = true,
---           preview = {
---           win_height = 12,
---           win_vheight = 12,
---           delay_syntax = 80,
---           border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
---           },
---           func_map = {
---           vsplit = "",
---           ptogglemode = "z,",
---           stoggleup = "",
---           },
---           filter = {
---           fzf = {
---           action_for = { ["ctrl-s"] = "split" },
---           extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
---           },
---           },
---           })
---   end,
--- },
-
 }
 
 local pyright_opts = {
@@ -79,13 +55,13 @@ require("lvim.lsp.manager").setup("pyright", pyright_opts)
 -- setup linting
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { command = "flake8", args = { "--max-line-length=89" }, filetypes = { "python" } },
+  { command = "flake8", args = { "--max-line-length=89", "--extend-ignore=F" }, filetypes = { "python" } },
   { command = "shellcheck" }
 }
 
 -- setup formatting
 local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup { { name = "black" },  { name = 'isort' } }
+formatters.setup { { name = "black" }, { name = 'isort' } }
 -- formatters.shfmt.with({
 --   extra_args = {"-i", "2", "-sr", "-s", "-ci"}
 -- })
@@ -106,8 +82,9 @@ lvim.builtin.which_key.mappings["C"] = {
 }
 
 -- Fixes highlighting for active quickfix line
-local colors vim.api.nvim_create_augroup("vimrc_colors", { clear = true })
-vim.api.nvim_create_autocmd({'ColorScheme'}, {
+local colors
+vim.api.nvim_create_augroup("vimrc_colors", { clear = true })
+vim.api.nvim_create_autocmd({ 'ColorScheme' }, {
   pattern = "*",
   group = colors,
   command = "hi QuickFixLine guibg=NONE"
@@ -124,3 +101,20 @@ vim.keymap.set("n", "[t", function()
 end, { desc = "Previous todo comment" })
 
 vim.keymap.set('n', '<cr>', ':noh<cr><cr>', { noremap = true, silent = true })
+
+-- Trouble keys
+vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
+vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
+vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
+vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
+
+lvim.builtin.which_key.mappings["x"] = {
+  name = "Trouble & todo-comments",
+  x = { "<cmd>lua require('trouble').toggle()<cr>", "Toggle trouble" },
+  w = { "<cmd>lua require('trouble').toggle('workspace_diagnostics')<cr>", "Workplace diagnostics" },
+  d = { "<cmd>lua require('trouble').toggle('document_diagnostics')<cr>", "Document diagnostics" },
+  q = { "<cmd>lua require('trouble').toggle('quickfix')<cr>", "Quickfix" },
+  l = { "<cmd>lua require('trouble').toggle('loclist')<cr>", "Loclist" },
+}
