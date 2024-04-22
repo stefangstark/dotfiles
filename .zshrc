@@ -17,7 +17,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ###############################################################
 # => management
 ###############################################################
-alias config='/usr/bin/git --git-dir=$HOME/.repo-configs/ --work-tree=$HOME'
+alias config='/usr/bin/git --git-dir=$HOME/.config-repo/ --work-tree=$HOME'
 
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/Users/starks/.local/bin:${HOME}/.cargo/bin:$PATH
 export CFG=$HOME/.config
