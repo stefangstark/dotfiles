@@ -5,6 +5,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Set editor
+export EDITOR=lvim
+export VISUAL="$EDITOR"
+
 # export TERM="xterm-256color"
 export LS_COLORS="di=1;36:ln=1;97:or=1;31"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -44,7 +48,7 @@ if [[ -n $TMUX_SESSION_NAME ]]; then
     [ -f $tmux_session_alias ] && source $tmux_session_alias
 fi
 
-alias code='tmux rename-window code && cd "${CODEDIR}"'
+alias code='cd "${CODEDIR}"'
 
 ###############################################################
 # => alisases
@@ -109,6 +113,8 @@ eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=
 
 [ -f .envrc ] && direnv reload
+
+autoload -Uz bashcompinit && bashcompinit
 
 
 ################################################################

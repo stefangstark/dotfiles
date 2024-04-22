@@ -61,6 +61,20 @@ lvim.plugins = {
     'nvim-telescope/telescope-frecency.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim', 'kkharji/sqlite.lua' },
   },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "BufRead",
+    config = function() require"lsp_signature".on_attach() end,
+  },
+  {
+    "VonHeikemen/fine-cmdline.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+  },
+  {"kiyoon/telescope-insert-path.nvim"},
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  }
 }
 
 table.insert(lvim.plugins, {
@@ -72,3 +86,20 @@ table.insert(lvim.plugins, {
     if ok then cmp.setup({}) end
   end,
 })
+
+require("telescope").load_extension "file_browser"
+
+
+-- Very clunky way to remove the buffer source from cmp
+local new_sources = vim.tbl_filter(function(source)
+  return not vim.tbl_contains({"path"}, source.name)
+end, lvim.builtin.cmp.sources)
+
+vim.list_extend(new_sources, {
+  {
+    name = "path",
+    option={ get_cwd = function() return vim.fn.getcwd() end }
+  },
+})
+
+lvim.builtin.cmp.sources = new_sources

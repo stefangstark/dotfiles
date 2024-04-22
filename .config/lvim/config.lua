@@ -5,6 +5,6 @@
 
 reload("user.plugins")
 reload("user.colorscheme")
+reload("user.lsp")
 reload("user.options")
 reload("user.keymaps")
-reload("user.lsp")

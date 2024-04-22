@@ -23,23 +23,20 @@ lvim.builtin.which_key.mappings["C"] = {
   c = { "<cmd>lua require('swenv.api').pick_venv()<cr>", "Choose Env" },
 }
 
-lvim.lsp.buffer_mappings.normal_mode["gr"] = {
-  ":lua require'telescope.builtin'.lsp_references()<cr>",
-  "Find references"
-}
-
-lvim.lsp.buffer_mappings.normal_mode["gd"] = {
-  ":lua vim.lsp.buf.definition()<cr>",
-  -- ":lua require'telescope.builtin'.lsp_definitions()<cr>",
-  " Definitions"
-}
-
-lvim.lsp.buffer_mappings.normal_mode["gD"] = {
-  ":lua vim.lsp.buf.type_definition()<cr>",
-  " Type Definition"
-}
-
 vim.api.nvim_set_keymap("n", "f", ":HopChar1<cr>", { silent = true })
 vim.api.nvim_set_keymap("n", "t", ":HopPattern<cr>", { silent = true })
 
 vim.keymap.set('n', 'K', vim.lsp.buf.hover, {silent = true, noremap = true})
+
+lvim.builtin.which_key.mappings["lh"] = {
+  "<cmd>lua require('lsp_signature').toggle_float_win()<cr>", "Toggle LSP signatures"
+}
+
+lvim.builtin.which_key.mappings["ss"] = {
+  "<cmd>lua require('telescope.builtin').grep_string()<cr>", "Search for string under cursor"
+}
+
+lvim.builtin.which_key.mappings["sd"] = {
+  "<cmd> lua require('telescope.builtin').find_files({follow = true, no_ignore = true})<cr>", "Seach all files",
+}
+
