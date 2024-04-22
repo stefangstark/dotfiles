@@ -5,7 +5,7 @@ To set up on a new env run:
 To your rc/profile file add:
 
 ```
-alias config='/usr/bin/git --git-dir=$HOME/.repo-configs/ --work-tree=$HOME'
+alias config='/usr/bin/git --git-dir=$HOME/.config-repo/ --work-tree=$HOME'
 ```
 
 And then run:
