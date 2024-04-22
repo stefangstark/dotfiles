@@ -24,6 +24,9 @@ curl -L git.io/antigen > .config/zsh/antigen.zsh
 ```
 
 
+## Install brew packages
+probably better ways to do this ... 
+- I keep simple things in `.config/brew-formulae.txt`
+- install jetbrains with [nerd fonts](https://www.nerdfonts.com/font-downloads)
 
-## Setting up nvim
-For now I am using NvChad, it has a lot of out-of-the-box functionality for neovim, but hard to share across envs. You need to install and then copy `.config/nvim/lua/custom` over from local
+## Install lunarvim
