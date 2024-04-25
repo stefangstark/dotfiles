@@ -5,6 +5,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+eval $(/opt/homebrew/bin/brew shellenv)
+
 # Set editor
 export EDITOR=lvim
 export VISUAL="$EDITOR"
@@ -19,7 +21,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ###############################################################
 alias config='/usr/bin/git --git-dir=$HOME/.config-repo/ --work-tree=$HOME'
 
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/Users/starks/.local/bin:${HOME}/.cargo/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:${HOME}/.local/bin:${HOME}/.cargo/bin:$PATH
 export CFG=$HOME/.config
 export ADOTDIR=$CFG/zsh/.antigen
 
@@ -123,22 +125,21 @@ autoload -Uz bashcompinit && bashcompinit
 
 [[ -f $CFG/zsh/local.zsh ]] && source $CFG/zsh/local.zsh
 
-# >>> conda initialize >>>
+################################################################
+# => conda initialize
+################################################################
+
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/starks/software/anaconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/starks/software/anaconda/etc/profile.d/conda.sh" ]; then
-        . "/Users/starks/software/anaconda/etc/profile.d/conda.sh"
+    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/starks/software/anaconda/bin:$PATH"
+        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
     fi
 fi
 unset __conda_setup
-
-if [ -f "/Users/starks/software/anaconda/etc/profile.d/mamba.sh" ]; then
-    . "/Users/starks/software/anaconda/etc/profile.d/mamba.sh"
-fi
 # <<< conda initialize <<<
 
