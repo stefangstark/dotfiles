@@ -5,7 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-eval $(/opt/homebrew/bin/brew shellenv)
 
 # Set editor
 export EDITOR=lvim
@@ -29,7 +28,6 @@ export ADOTDIR=$CFG/zsh/.antigen
 # => antigen installs
 ###############################################################
 
-source $CFG/zsh/antigen.zsh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 antigen theme romkatv/powerlevel10k powerlevel10k
@@ -75,7 +73,7 @@ _comp_options+=(globdots)        # Include hidden files
 ###############################################################
 # => history
 ###############################################################
-HISTFILE=$HOME/.zhistory
+HISTFILE=$CFG/zsh/.zhistory
 SAVEHIST=10000
 HISTSIZE=10000
 setopt HIST_EXPIRE_DUPS_FIRST
