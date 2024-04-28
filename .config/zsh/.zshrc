@@ -22,7 +22,6 @@ alias config='/usr/bin/git --git-dir=$HOME/.config-repo/ --work-tree=$HOME'
 
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:${HOME}/.local/bin:${HOME}/.cargo/bin:$PATH
 export CFG=$HOME/.config
-export ADOTDIR=$CFG/zsh/.antigen
 
 ###############################################################
 # => antigen installs
@@ -73,7 +72,7 @@ _comp_options+=(globdots)        # Include hidden files
 ###############################################################
 # => history
 ###############################################################
-HISTFILE=$CFG/zsh/.zhistory
+HISTFILE=$CFG/zsh/.zsh_history
 SAVEHIST=10000
 HISTSIZE=10000
 setopt HIST_EXPIRE_DUPS_FIRST

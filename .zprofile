@@ -7,3 +7,10 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/config
 export NPM_CONFIG_CACHE=$XDG_CACHE_HOME/npm
 export NPM_CONFIG_TMP=$XDG_RUNTIME_DIR/npm
+
+export ZDOTDIR=.config/zsh
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export ADOTDIR=.config/zsh/.antigen
+source /opt/homebrew/Cellar/antigen/2.2.3/share/antigen/antigen.zsh
+
