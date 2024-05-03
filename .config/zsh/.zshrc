@@ -18,8 +18,6 @@ plug "zsh-users/zsh-history-substring-search"
 plug "romkatv/powerlevel10k"
 [ -f $ZDOTDIR/.p10k.zsh ] && source $ZDOTDIR/.p10k.zsh
 
-bindkey '^ ' autosuggest-accept
-
 if command -v bat &> /dev/null; then
   alias cat="bat -pp --theme \"Nord\""
   alias catt="bat --theme \"Nord\""
