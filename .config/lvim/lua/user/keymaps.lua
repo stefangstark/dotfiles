@@ -40,3 +40,4 @@ lvim.builtin.which_key.mappings["sd"] = {
   "<cmd> lua require('telescope.builtin').find_files({follow = true, no_ignore = true})<cr>", "Seach all files",
 }
 
+lvim.keys.normal_mode["<M-Up>"] = false

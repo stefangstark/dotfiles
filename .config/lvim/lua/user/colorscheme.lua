@@ -16,6 +16,7 @@ local themes = {
   edge = "edge",
   ayu = "ayu",
   onenord = "onenord",
+  onenord_light = "onenord-light",
 }
 
 -- lvim.colorscheme = themes.lunar
