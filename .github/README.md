@@ -1,26 +1,33 @@
 # dotfiles
-See: https://www.atlassian.com/git/tutorials/dotfiles
 
-To set up on a new env:
+## Installing
 
-Run:
-```
-alias config='/usr/bin/git --git-dir=$HOME/.config-repo/ --work-tree=$HOME'
-```
+You will need `git` and GNU `stow`
 
-And then run:
+Clone into your `$HOME` directory or `~`
 
-```
-git clone --bare git@github.com:stefangstark/dotfiles.git $HOME/.config-repo
-config checkout
-config config --local status.showUntrackedFiles no
+```bash
+git clone https://github.com/stefangstark/dotfiles.git ~/.dotfiles
 ```
 
-Install
-- [zap](https://github.com/zap-zsh/zap) to manage `zsh` packages
-- [brew](https://brew.sh) to handle the rest
+Run `stow` to symlink everything or just select what you want
 
-Install casks & tools with
+```bash
+stow */ # Everything (the '/' ignores the README)
 ```
-brew bundle --install .config/brew-bundle-dump.txt
+
+```bash
+stow zsh # Just my zsh config
+```
+
+MacOS
+
+All of my packages for MacOS can be found in `brew/.Brewfile`
+
+- Install
+
+```
+stow ~/.machfiles/brew
+
+brew bundle --global
 ```
