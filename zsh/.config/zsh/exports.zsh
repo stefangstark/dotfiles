@@ -1,7 +1,7 @@
 #! /bin/sh
 
-mkdir -p $ZDOTDIR/zhistory
-export HISTFILE=$ZDOTDIR/zhistory/zsh-history
+mkdir -p "$HOME/.config/zsh/zhistory"
+export HISTFILE="$HOME/.config/zsh/zhistory/history.zsh"
 SAVEHIST=10000
 HISTSIZE=10000
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -13,7 +13,7 @@ export VISUAL="$EDITOR"
 export PATH="$HOME/.local/bin":$PATH
 export PATH="$HOME/.cargo/bin":$PATH
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(fnm env --use-on-cd)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
