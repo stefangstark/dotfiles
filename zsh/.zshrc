@@ -16,7 +16,7 @@ plug "zsh-users/zsh-history-substring-search"
 # plug "zap-zsh/supercharge"
 
 plug "romkatv/powerlevel10k"
-[ -f $ZDOTDIR/.p10k.zsh ] && source $ZDOTDIR/.p10k.zsh
+[ -f "$HOME/.config/zsh/p10k.zsh" ] && source "$HOME/.config/zsh/p10k.zsh"
 
 if command -v bat &> /dev/null; then
   alias cat="bat -pp --theme \"Nord\""
