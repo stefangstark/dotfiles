@@ -10,5 +10,5 @@ fi
 if [[ -n $TMUX_SESSION_NAME ]]; then
     tmux_session_alias=${XDG_DATA_HOME:-$HOME}/tmux/envs/${TMUX_SESSION_NAME}
     [ -f $tmux_session_alias ] && source $tmux_session_alias
-    [ -f $tmux_session_alias ] && HISTFILE=~/.config/zsh/zhistory/${TMUX_SESSION_NAME}-history.zsh
+    [ -f $tmux_session_alias ] && HISTFILE="$ZHISTDIR/${TMUX_SESSION_NAME}-zhistory.zsh"
 fi

@@ -1,7 +1,8 @@
 #! /bin/sh
 
-mkdir -p "$HOME/.config/zsh/zhistory"
-export HISTFILE="$HOME/.config/zsh/zhistory/history.zsh"
+export ZHISTDIR="$HOME/.zhistory"
+mkdir -p "$ZHISTDIR"
+export HISTFILE="$ZHISTDIR/zhistory.zsh"
 SAVEHIST=10000
 HISTSIZE=10000
 setopt HIST_EXPIRE_DUPS_FIRST
