@@ -1,0 +1,15 @@
+#! /bin/bash
+
+# raise error if any command fails
+[ -z "$OBSIDIAN_VAULT_DIR" ] && echo "OBSIDIAN_VAULT_DIR not set" && exit 1
+
+name="$*"
+[ -z "$name" ] && echo "Usage: meeting <name>" && exit 1
+
+today=$(date +"%Y-%m-%d")
+target="${OBSIDIAN_VAULT_DIR}/Notes/${today} Meeting ${name}.md"
+template="${OBSIDIAN_VAULT_DIR}/Templates/Meeting Template.md"
+
+[ -f "$target" ] || sed "s/date:/date: $today/" "$template" > "$target"
+
+$EDITOR "+normal G$" "$target"

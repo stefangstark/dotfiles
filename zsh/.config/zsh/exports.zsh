@@ -1,7 +1,6 @@
-#! /bin/sh
+#! /bin/bash
 
 export ZHISTDIR="$HOME/.zhistory"
-mkdir -p "$ZHISTDIR"
 export HISTFILE="$ZHISTDIR/zhistory.zsh"
 SAVEHIST=10000
 HISTSIZE=10000
@@ -17,6 +16,8 @@ export PATH="$HOME/.cargo/bin":$PATH
 eval "$(fnm env --use-on-cd)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
+export FZF_DEFAULT_OPTS='--layout=reverse --no-border'
+export FZF_DEFAULT_COMMAND='fd --hidden --no-ignore'
 
 eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=
@@ -36,4 +37,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-

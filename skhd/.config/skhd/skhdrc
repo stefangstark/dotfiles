@@ -1,0 +1,46 @@
+cmd - return : osascript ~/.config/skhd/wezterm.scpt
+cmd - 0x1E: osascript ~/.config/skhd/arc.scpt
+cmd - 0x32 :
+  yabai -m space --layout \
+  $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+
+cmd - tab : yabai -m space --focus next || yabai -m space --focus first
+cmd + shift - tab : yabai -m space --focus prev || yabai -m space --focus last
+cmd - escape : yabai -m space --focus recent
+
+cmd - e : yabai -m space --toggle show-desktop
+
+ctrl + alt - n : yabai -m space --create && \
+	index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+	yabai -m space --focus "${index}"
+
+alt - n : yabai -m space --create && \
+	index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+	yabai -m window --space "${index}" && \
+	yabai -m space --focus "${index}"
+
+ctrl + alt - backspace :
+	index="$(yabai -m query --spaces --display | jq 'map(select(."has-focus" == true))[0].index')" && \
+	yabai -m space --destroy && \
+	yabai -m space --focus "${index}" || yabai -m space --focus "$(($index - 1))" \
+	&& yabai -m query --spaces --display | \
+	jq -re 'map(select(."is-native-fullscreen" == false)) | length > 1' \
+	&& yabai -m query --spaces | \
+	jq -re 'map(select(."windows" == []).index) | reverse | .[] ' | \
+	xargs -I % sh -c 'yabai -m space % --destroy'
+
+cmd - g : yabai -m window --toggle zoom-fullscreen
+
+cmd - s [
+	"google chrome" : skhd --key "cmd + shift - h"
+]
+
+ctrl + alt - left : yabai -m window --swap west
+ctrl + alt - down : yabai -m window --swap south
+ctrl + alt - up : yabai -m window --swap north
+ctrl + alt - right : yabai -m window --swap east

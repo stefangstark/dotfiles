@@ -1,3 +1,5 @@
+#! /bin/bash
+#
 bindkey -v
 export KEYTIMEOUT=1
 bindkey "^?" backward-delete-char
