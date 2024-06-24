@@ -1,9 +1,17 @@
 lvim.plugins = {
+  -- { "nvim-treesitter/nvim-treesitter-context"  },
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" }
   },
-  { "rmehri01/onenord.nvim"},
+  {
+    "rmehri01/onenord.nvim",
+    config = function()
+      require('onenord').setup({
+        disable={ background = true },
+      })
+    end
+  },
   {
     "AckslD/swenv.nvim",
     config = function()
@@ -14,7 +22,7 @@ lvim.plugins = {
       })
     end
   },
-  { "stevearc/dressing.nvim" },
+  -- { "stevearc/dressing.nvim" },
   {
     "folke/todo-comments.nvim",
     event = "BufRead",
