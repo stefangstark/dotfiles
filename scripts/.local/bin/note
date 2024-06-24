@@ -1,8 +1,8 @@
 #! /bin/bash
 
-[ -z $OBSIDIAN_VAULT_DIR ] && echo "OBSIDIAN_VAULT_DIR not set" && exit 1
+[ -z "$OBSIDIAN_VAULT_DIR" ] && echo "OBSIDIAN_VAULT_DIR not set" && exit 1
 
-title="$@"
+title="${*%.md}"
 
 if [[ -z "$title" ]]; then 
   today=$(date +"%Y-%m-%d")

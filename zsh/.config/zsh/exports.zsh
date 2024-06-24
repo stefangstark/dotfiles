@@ -8,16 +8,11 @@ setopt HIST_EXPIRE_DUPS_FIRST
 
 export EDITOR=lvim
 export VISUAL="$EDITOR"
-# export LS_COLORS="di=1;36:ln=1;97:or=1;31"
-
 export PATH="$HOME/.local/bin":$PATH
 export PATH="$HOME/.cargo/bin":$PATH
 
 eval "$(fnm env --use-on-cd)"
 eval "$(zoxide init zsh)"
-eval "$(fzf --zsh)"
-export FZF_DEFAULT_OPTS='--layout=reverse --no-border'
-export FZF_DEFAULT_COMMAND='fd --hidden --no-ignore'
 
 eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=

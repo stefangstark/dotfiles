@@ -13,3 +13,9 @@ yabai -m config auto_balance on
 
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Digital Color Meter$" sticky=on layer=above manage=off
+yabai -m rule --add can-resize="^false$" manage=of
+yabai -m rule --add app="^Arc$" title="Stefan" manage=off
+yabai -m rule --add app="^Raycast$" manage=off
+yabai -m rule --add app="^1Password$" manage=off
+yabai -m rule --add app="WhatsApp$" manage=off
+yabai -m rule --add app="^Slack$" title="Huddle with" manage=off

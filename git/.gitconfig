@@ -3,6 +3,6 @@
 	name = Stefan Stark
 
 [core]
-	editor = nvim
+	editor = lvim
 [color]
 	ui = true

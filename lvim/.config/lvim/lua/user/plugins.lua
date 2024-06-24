@@ -74,7 +74,57 @@ lvim.plugins = {
   {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-  }
+  },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",  -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    -- event = {
+    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
+      -- "BufReadPre path/to/my-vault/**.md",
+      -- "BufNewFile path/to/my-vault/**.md",
+    -- },
+    dependencies = {
+      -- Required.
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      workspaces = {
+        {
+          name = "main",
+          path = "~/Documents/obsidian-vault/main/"
+        },
+      },
+    },
+  },
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function() require("oil").setup({
+      columns = {"icon"},
+      keymaps = {
+        ["<C-h>"] = false,
+        ["<M-h>"] = "actions.select_split",
+      },
+      view_options = {
+        show_hidden = true
+      },
+    })
+    end
+  },
+  {
+  "ibhagwan/fzf-lua",
+  -- optional for icon support
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  config = function()
+    -- calling `setup` is optional for customization
+    require("fzf-lua").setup({})
+  end
+}
+
 }
 
 table.insert(lvim.plugins, {
@@ -87,8 +137,7 @@ table.insert(lvim.plugins, {
   end,
 })
 
-require("telescope").load_extension "file_browser"
-
+-- require("telescope").load_extension "file_browser"
 
 -- Very clunky way to remove the buffer source from cmp
 local new_sources = vim.tbl_filter(function(source)

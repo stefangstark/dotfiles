@@ -1,22 +1,38 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# set -euo pipefail
 
-window=$(yabai -m query --windows | jq 'map(select(.app == "WezTerm" or .app == "wezterm-gui")) | sort_by(.id) | last')
-is_visible=$(echo "$window" | jq '."is-visible"')
-id=$(echo "$window" | jq '.id')
+# window=$(yabai -m query --windows | jq 'map(select(.app == "WezTerm" or .app == "wezterm-gui")) | sort_by(.id) | last')
+# is_visible=$(echo "$window" | jq '."is-visible"')
+# id=$(echo "$window" | jq '.id')
 
-# test if window was found, if not, open the app
-if [ "$window" = "null" ]; then
-  # wezterm --config 'color_scheme="Batman"' &
-  open -na WezTerm --args --config 'color_scheme="Batman"'
-  yabai -m window "$id" --grid 1:3:2:0:1:1
+# # test if window was found, if not, open the app
+# if [ "$window" = "null" ]; then
+#   # wezterm --config 'color_scheme="Batman"' &
+#   open -na WezTerm --args --config 'color_scheme="Batman"'
+#   yabai -m window "$id" --grid 1:3:2:0:1:1
 
-elif [ "$is_visible" = "false" ]; then
-  # if not visible, move the window to the current space and focus it
-  yabai -m window "$id" --sub-layer above --toggle sticky --space mouse --focus
+# elif [ "$is_visible" = "false" ]; then
+#   # if not visible, move the window to the current space and focus it
+#   yabai -m window "$id" --sub-layer above --toggle sticky --space mouse --focus
 
-else
-  # if visible, hide the window
-  osascript -e "tell application \"System Events\" to set visible of first process ¬" \
-            -e "whose name is \"wezterm-gui\" to false"
-fi
+# else
+#   # if visible, hide the window
+#   osascript -e "tell application \"System Events\" to set visible of first process ¬" \
+#             -e "whose name is \"wezterm-gui\" to false"
+# fi
+
+
+WINDOW_TITLE="ddterm";                                                                                      
+WINDOW_ID=$(yabai -m query --windows | jq -e ".[] | select(.title==\"$WINDOW_TITLE\") | .id");              
+if [ -z "$WINDOW_ID" ]; then                                                                                
+  pgrep -x alacritty > /dev/null &&                                                                        
+  alacritty msg create-window --title "$WINDOW_TITLE" ||                                                    
+  open -na /Applications/Alacritty.app --args --title "$WINDOW_TITLE";                                      
+else                                                                                                        
+  DISTANCE=$(yabai -m query --windows --window "$WINDOW_ID" | jq -e '[ .frame.y, .frame.h ] | add');       
+  if [ "$DISTANCE" -gt 0 ]; then                                                                            
+    yabai -m window "$WINDOW_ID" --move abs:0:-"$DISTANCE" --layer below --focus mouse;                     
+  else                                                                                                      
+    yabai -m window "$WINDOW_ID" --space mouse --move abs:0:0 --grid "10:1:0:0:1:4" --layer above --focus;  
+  fi;                                                                                                      
+fi;

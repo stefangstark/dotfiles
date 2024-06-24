@@ -1,5 +1,9 @@
 lvim.keys.normal_mode["<Tab>"] = ":bnext<cr>"
 lvim.keys.normal_mode["<S-Tab>"] = ":bprev<cr>"
+-- lvim.keys.normal_mode["<c-r>"] = ":FzfLua command_history<cr>"
+vim.cmd("nnoremap gl $")
+vim.cmd("nnoremap gh ^")
+lvim.keys.normal_mode["\\\\"] = "<cmd> lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>"
 
 vim.keymap.set("n", "]t", function()
   require("todo-comments").jump_next()
@@ -32,11 +36,28 @@ lvim.builtin.which_key.mappings["lh"] = {
   "<cmd>lua require('lsp_signature').toggle_float_win()<cr>", "Toggle LSP signatures"
 }
 
-lvim.builtin.which_key.mappings["ss"] = {
+lvim.builtin.which_key.mappings["sg"] = {
   "<cmd>lua require('telescope.builtin').grep_string()<cr>", "Search for string under cursor"
+}
+
+lvim.builtin.which_key.mappings["ss"] = {
+  "<cmd>lua require('telescope.builtin').git_files()<cr>", "Search git repo"
 }
 
 lvim.builtin.which_key.mappings["sd"] = {
   "<cmd> lua require('telescope.builtin').find_files({follow = true, no_ignore = true})<cr>", "Seach all files",
 }
 
+lvim.builtin.which_key.mappings["sS"] = {
+  "<cmd> lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>", "Search in buffer",
+}
+
+
+
+-- vim.keymap.set("n", "ee", ':exec &bg=="light"? "set bg=dark" : "set bg=light"<cr>', {noremap = true, silent = true})
+-- vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory"})
+
+vim.keymap.set("n", "-", function()
+  vim.cmd("vsplit | wincmd l")
+  require("oil").open()
+end)

@@ -1,19 +1,25 @@
+# cmd - return : osascript -e 'tell app "System Events" to tell appearance preferences to set dark mode to not dark mode'
 cmd - return : osascript ~/.config/skhd/wezterm.scpt
-cmd - 0x1E: osascript ~/.config/skhd/arc.scpt
+cmd + shift - return: osascript ~/.config/skhd/browser.scpt
+#
+cmd + shift - 0x32 : yabai -m window --toggle float
 cmd - 0x32 :
   yabai -m space --layout \
   $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
 
-alt - h : yabai -m window --focus west
-alt - j : yabai -m window --focus south
-alt - k : yabai -m window --focus north
-alt - l : yabai -m window --focus east
+
+cmd + shift - 0x35 : yabai -m space --toggle mission-control 
+cmd - 0x35: yabai -m space --focus recent
+
+shift + alt - h : yabai -m window --focus west
+shift + alt - j : yabai -m window --focus south
+shift + alt - k : yabai -m window --focus north
+shift + alt - l : yabai -m window --focus east
 
 cmd - tab : yabai -m space --focus next || yabai -m space --focus first
 cmd + shift - tab : yabai -m space --focus prev || yabai -m space --focus last
-cmd - escape : yabai -m space --focus recent
 
-cmd - e : yabai -m space --toggle show-desktop
+# cmd - e : yabai -m space --toggle show-desktop
 
 ctrl + alt - n : yabai -m space --create && \
 	index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
@@ -44,3 +50,8 @@ ctrl + alt - left : yabai -m window --swap west
 ctrl + alt - down : yabai -m window --swap south
 ctrl + alt - up : yabai -m window --swap north
 ctrl + alt - right : yabai -m window --swap east
+
+ctrl + alt - h : yabai -m window --swap west
+ctrl + alt - j : yabai -m window --swap south
+ctrl + alt - k : yabai -m window --swap north
+ctrl + alt - l : yabai -m window --swap east
