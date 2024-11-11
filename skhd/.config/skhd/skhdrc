@@ -1,0 +1,63 @@
+# keymaps: https://github.com/koekeishiya/skhd/issues/1
+cmd + alt - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
+# cmd + shift - return: osascript ~/.config/skhd/browser.scpt
+cmd + alt - l : open -na Firefox
+
+cmd - 0x32 : yabai -m window --toggle float
+cmd + shift - 0x32 : 
+  yabai -m space --layout \
+  $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+
+cmd + shift - 0x35 : yabai -m space --toggle mission-control 
+cmd - 0x35: yabai -m space --focus recent
+
+cmd + alt - w:  yabai -m window --toggle whatsapp || open -a Whatsapp
+cmd + alt - s:  yabai -m window --toggle signal || open -a Signal
+cmd + alt - m:  yabai -m window --toggle messages || open -a Messages
+cmd + alt - k:  yabai -m window --toggle slack || open -a Slack
+
+cmd + alt - tab: /Applications/kitty.app/Contents/MacOS/kitty \
+  --single-instance \
+  --title switcher \
+  -o close_on_child_death=yes \
+  -o macos_quit_when_last_window_closed=yes \
+  -- switch
+
+cmd + shift - 0x1E: yabai -m space --focus next || yabai -m space --focus first
+cmd + shift - 0x21: yabai -m space --focus prev || yabai -m space --focus last
+
+ctrl + alt - n : yabai -m space --create && \
+	index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+	yabai -m space --focus "${index}"
+
+alt - n : index=$(~/.config/skhd/get-or-create-empty-window) && yabai -m window --space "${index}" && yabai -m space --focus "${index}"
+
+ctrl + alt - backspace :
+	index="$(yabai -m query --spaces --display | jq 'map(select(."has-focus" == true))[0].index')" && \
+	yabai -m space --destroy && \
+	yabai -m space --focus "${index}" || yabai -m space --focus "$(($index - 1))" \
+	&& yabai -m query --spaces --display | \
+	jq -re 'map(select(."is-native-fullscreen" == false)) | length > 1' \
+	&& yabai -m query --spaces | \
+	jq -re 'map(select(."windows" == []).index) | reverse | .[] ' | \
+	xargs -I % sh -c 'yabai -m space % --destroy'
+
+cmd - g : yabai -m window --toggle zoom-fullscreen
+
+ctrl + alt - left : yabai -m window --swap west
+ctrl + alt - down : yabai -m window --swap south
+ctrl + alt - up : yabai -m window --swap north
+ctrl + alt - right : yabai -m window --swap east
+
+ctrl + alt - h : yabai -m window --swap west
+ctrl + alt - j : yabai -m window --swap south
+ctrl + alt - k : yabai -m window --swap north
+ctrl + alt - l : yabai -m window --swap east
+
+shift + alt - h : yabai -m window --focus west
+shift + alt - j : yabai -m window --focus south
+shift + alt - k : yabai -m window --focus north
+shift + alt - l : yabai -m window --focus east
+
+# alt - tab: yabai -m window --focus east || yabai -m window --focus west
+# alt + shift - tab: yabai -m window --focus west

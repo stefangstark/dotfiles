@@ -1,0 +1,8 @@
+[user]
+	email = stefan.g.stark@gmail.com
+	name = Stefan Stark
+
+[core]
+	editor = lvim
+[color]
+	ui = true
