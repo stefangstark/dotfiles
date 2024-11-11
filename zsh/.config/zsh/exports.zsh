@@ -6,10 +6,9 @@ SAVEHIST=10000
 HISTSIZE=10000
 setopt HIST_EXPIRE_DUPS_FIRST
 
-export EDITOR=lvim
+export EDITOR=nvim
 export VISUAL="$EDITOR"
-export PATH="$HOME/.local/bin":$PATH
-export PATH="$HOME/.cargo/bin":$PATH
+export IPYTHONDIR="$HOME/.config/.ipython/"
 
 eval "$(fnm env --use-on-cd)"
 eval "$(zoxide init zsh)"

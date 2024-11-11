@@ -19,13 +19,19 @@ plug "zsh-users/zsh-history-substring-search"
 plug "romkatv/powerlevel10k"
 [ -f "$HOME/.config/zsh/p10k.zsh" ] && source "$HOME/.config/zsh/p10k.zsh"
 
-if command -v bat &> /dev/null; then
-  alias cat="bat -pp --theme \"Nord\""
-  alias catt="bat --theme \"Nord\""
-fi
+# if command -v bat &> /dev/null; then
+#   alias cat="bat -pp --theme \"Nord\""
+#   alias catt="bat --theme \"Nord\""
+# fi
 
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+
+bindkey '^l' autosuggest-accept
+bindkey '^\' autosuggest-execute
+
+bindkey '^k' history-substring-search-up
+bindkey '^j' history-substring-search-down
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down

@@ -6,5 +6,5 @@ alias vim='nvim'
 alias cd='z'
 alias gg='lazygit'
 
-alias python='/usr/bin/python3'
-alias pip='/usr/bin/pip3'
+# alias python='/usr/bin/python3'
+# alias pip='/usr/bin/pip3'

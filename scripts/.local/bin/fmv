@@ -1,0 +1,8 @@
+#! /bin/bash
+
+src=$1
+tgt=${2:-.}
+
+find "$src" -type f -exec ls -t {} + |
+	fzf -m --print0 |
+	xargs -0 -I {} cp {} "$tgt"

@@ -40,5 +40,10 @@ _fzf_comprun() {
     note)
       fd -e md . --base-directory=$OBSIDIAN_VAULT_DIR/Notes -X ls -t |
         fzf "$@" --preview 'cat $OBSIDIAN_VAULT_DIR/Notes/{}';;
+    meeting)
+      fd -e md . --base-directory=$OBSIDIAN_VAULT_DIR/Notes -X ls -t |
+        grep Meeting |
+        fzf "$@" --preview 'cat $OBSIDIAN_VAULT_DIR/Notes/{}';;
+
   esac
 }

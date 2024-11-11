@@ -1,8 +1,8 @@
 lvim.keys.normal_mode["<Tab>"] = ":bnext<cr>"
 lvim.keys.normal_mode["<S-Tab>"] = ":bprev<cr>"
 -- lvim.keys.normal_mode["<c-r>"] = ":FzfLua command_history<cr>"
-vim.cmd("nnoremap gl $")
-vim.cmd("nnoremap gh ^")
+-- vim.cmd("nnoremap gl $")
+-- vim.cmd("nnoremap gh ^")
 lvim.keys.normal_mode["\\\\"] = "<cmd> lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>"
 
 vim.keymap.set("n", "]t", function()
