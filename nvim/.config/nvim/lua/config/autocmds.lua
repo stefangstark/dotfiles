@@ -2,7 +2,7 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
 
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufReadPre", "VimEnter" }, {
+vim.api.nvim_create_autocmd({ "VimEnter", "BufReadPre", "FileType" }, {
   pattern = "*.md",
   callback = function()
     local search = vim.fn.search("\\%^---", "n")
@@ -11,10 +11,8 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "BufReadPre", "VimEnter
     end
     vim.cmd("normal! gg")
     vim.cmd("2/---/1")
-    local old_option = vim.opt.scrolloff
-    vim.opt.scrolloff = 0
+    vim.opt_local.scrolloff = 0
     vim.cmd("normal! zt")
-    vim.opt.scrolloff = old_option
   end,
 })
 
