@@ -19,12 +19,11 @@ yabai -m rule --add app="^Cisco Secure" manage=off
 yabai -m rule --add label="Little Arc" app="^Arc$" title="^Space.*" manage=off
 
 # grid=<rows>:<cols>:<start-x>:<start-y>:<width>:<height>
-yabai -m rule --add app="kitty" title="switcher" manage=off grid="5:5:1:1:3:3"
-yabai -m rule --add app="kitty" title="todo" 
+yabai -m rule --add app="kitty" title="switcher" scratchpad="switcher" manage=off grid="5:5:1:1:3:3"
+yabai -m rule --add app="kitty" title="kitty-cl" scratchpad="kitty-cl" manage=off grid="5:5:1:1:3:1"
 
 # scratchpad
 yabai -m rule --add app="WhatsApp$" scratchpad="whatsapp" grid=5:5:1:1:3:3
 yabai -m rule --add app="Signal$" scratchpad="signal" grid=5:5:1:1:3:3
 yabai -m rule --add app="Messages$" scratchpad="messages" grid=5:5:1:1:3:3
 yabai -m rule --add app="Slack$" scratchpad="slack" grid=5:5:1:1:4:4
-

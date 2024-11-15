@@ -16,12 +16,19 @@ cmd + alt - s:  yabai -m window --toggle signal || open -a Signal
 cmd + alt - m:  yabai -m window --toggle messages || open -a Messages
 cmd + alt - k:  yabai -m window --toggle slack || open -a Slack
 
-cmd + alt - tab: /Applications/kitty.app/Contents/MacOS/kitty \
+cmd + alt - tab: yabai -m window --toggle "switcher" || /Applications/kitty.app/Contents/MacOS/kitty \
   --single-instance \
   --title switcher \
   -o close_on_child_death=yes \
   -o macos_quit_when_last_window_closed=yes \
   -- switch
+
+cmd + alt - 0x2A: yabai -m window --toggle "kitty-cl" || /Applications/kitty.app/Contents/MacOS/kitty \
+  --single-instance \
+  --title "kitty-cl" \
+  --working-directory $HOME \
+  -o close_on_child_death=yes \
+  -o macos_quit_when_last_window_closed=yes
 
 cmd + shift - 0x1E: yabai -m space --focus next || yabai -m space --focus first
 cmd + shift - 0x21: yabai -m space --focus prev || yabai -m space --focus last
