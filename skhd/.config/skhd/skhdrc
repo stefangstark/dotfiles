@@ -1,12 +1,11 @@
 # keymaps: https://github.com/koekeishiya/skhd/issues/1
-cmd + alt - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
-# cmd + shift - return: osascript ~/.config/skhd/browser.scpt
-cmd + alt - l : open -na Firefox
+cmd + alt - n: /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
+cmd + alt - 0x2C: open -na Firefox  # cmd + alt - /
 
 cmd - 0x32 : yabai -m window --toggle float
 cmd + shift - 0x32 : 
   yabai -m space --layout \
-  $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+ $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
 
 cmd + shift - 0x35 : yabai -m space --toggle mission-control 
 cmd - 0x35: yabai -m space --focus recent
@@ -30,6 +29,8 @@ cmd + alt - 0x2A: yabai -m window --toggle "kitty-cl" || /Applications/kitty.app
   -o close_on_child_death=yes \
   -o macos_quit_when_last_window_closed=yes
 
+cmd + alt - r: skhd --restart-service && yabai --restart-service
+
 cmd + shift - 0x1E: yabai -m space --focus next || yabai -m space --focus first
 cmd + shift - 0x21: yabai -m space --focus prev || yabai -m space --focus last
 
@@ -39,7 +40,7 @@ ctrl + alt - n : yabai -m space --create && \
 
 alt - n : index=$(~/.config/skhd/get-or-create-empty-window) && yabai -m window --space "${index}" && yabai -m space --focus "${index}"
 
-ctrl + alt - backspace :
+cmd + alt - backspace :
 	index="$(yabai -m query --spaces --display | jq 'map(select(."has-focus" == true))[0].index')" && \
 	yabai -m space --destroy && \
 	yabai -m space --focus "${index}" || yabai -m space --focus "$(($index - 1))" \
@@ -61,10 +62,13 @@ ctrl + alt - j : yabai -m window --swap south
 ctrl + alt - k : yabai -m window --swap north
 ctrl + alt - l : yabai -m window --swap east
 
-shift + alt - h : yabai -m window --focus west
-shift + alt - j : yabai -m window --focus south
-shift + alt - k : yabai -m window --focus north
-shift + alt - l : yabai -m window --focus east
+cmd + alt - h : yabai -m window --focus west
+cmd + alt - j : yabai -m window --focus south
+cmd + alt - k : yabai -m window --focus north
+cmd + alt - l : yabai -m window --focus east
 
 # alt - tab: yabai -m window --focus east || yabai -m window --focus west
 # alt + shift - tab: yabai -m window --focus west
+#
+alt - k : yabai -m window --focus stack.prev || yabai -m window --focus prev || yabai -m window --focus last
+alt - j : yabai -m window --focus stack.next || yabai -m window --focus next || yabai -m window --focus first

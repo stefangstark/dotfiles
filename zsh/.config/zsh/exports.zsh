@@ -1,5 +1,5 @@
 #! /bin/bash
-
+export PATH="/bin:$HOME/.local/bin:$PATH"
 export ZHISTDIR="$HOME/.zhistory"
 export HISTFILE="$ZHISTDIR/zhistory.zsh"
 SAVEHIST=10000
