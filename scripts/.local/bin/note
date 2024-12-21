@@ -4,16 +4,16 @@
 
 title="${*%.md}"
 
-if [[ -z "$title" ]]; then 
-  today=$(date +"%Y-%m-%d")
-  target="${OBSIDIAN_VAULT_DIR}/Daily/${today}.md"
-  template="${OBSIDIAN_VAULT_DIR}/Templates/Simple Daily Note Template.md"
-  [ -f "$target" ] || cp "$template" "$target"
+if [[ -z "$title" ]]; then
+	today=$(date +"%Y-%m-%d")
+	target="${OBSIDIAN_VAULT_DIR}/Daily/${today}.md"
+	template="${OBSIDIAN_VAULT_DIR}/Templates/Simple Daily Note Template.md"
+	[ -f "$target" ] || cp "$template" "$target"
 
 else
-  target="${OBSIDIAN_VAULT_DIR}/Notes/${title}.md"
-  [ -f "$target" ] || touch "$target"
-  
+	target="${OBSIDIAN_VAULT_DIR}/Notes/${title}.md"
+	[ -f "$target" ] || touch "$target"
+
 fi
 
-$EDITOR "+normal G$" "$target"
+cd $OBSIDIAN_VAULT_DIR && $EDITOR "+normal G$" "$target"

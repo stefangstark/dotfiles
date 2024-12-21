@@ -6,7 +6,8 @@ eval "$(fzf --zsh)"
 export FZF_DEFAULT_OPTS='--layout=reverse --no-border'
 export FZF_COMPLETION_OPTS='--layout=reverse --no-border'
 export FZF_DEFAULT_COMMAND='fd --hidden --no-ignore'
-export FZF_COMPLETION_TRIGGER=".."
+export FZF_COMPLETION_PATH_OPTS='--walker file,dir,follow,hidden'
+# export FZF_COMPLETION_TRIGGER=".."
 
 alias e="fzf --bind 'enter:become(\$EDITOR {})'"
 alias dot="fd -t f --hidden --exclude .git . --base-directory \$HOME/dotfiles | fzf --preview 'cat \$HOME/dotfiles/{}' --bind 'enter:become(cd \$HOME/dotfiles; \$EDITOR {})'"
@@ -44,6 +45,8 @@ _fzf_comprun() {
       fd -e md . --base-directory=$OBSIDIAN_VAULT_DIR/Notes -X ls -t |
         grep Meeting |
         fzf "$@" --preview 'cat $OBSIDIAN_VAULT_DIR/Notes/{}';;
+    *)
+      fzf;;
 
   esac
 }

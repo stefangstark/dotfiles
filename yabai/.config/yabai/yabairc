@@ -26,4 +26,6 @@ yabai -m rule --add app="kitty" title="kitty-cl" scratchpad="kitty-cl" manage=of
 yabai -m rule --add app="WhatsApp$" scratchpad="whatsapp" grid=5:5:1:1:3:3
 yabai -m rule --add app="Signal$" scratchpad="signal" grid=5:5:1:1:3:3
 yabai -m rule --add app="Messages$" scratchpad="messages" grid=5:5:1:1:3:3
-yabai -m rule --add app="Slack$" scratchpad="slack" grid=5:5:1:1:4:4
+yabai -m rule --add app="Slack$" scratchpad="slack" grid=6:6:1:1:5:5
+
+yabai -m config mouse_drop_action stack
