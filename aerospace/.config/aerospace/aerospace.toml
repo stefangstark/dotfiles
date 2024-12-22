@@ -237,7 +237,6 @@ alt-shift-f = [
 ]
 
 [mode.resize.binding]
-# See: https://nikitabobko.github.io/AeroSpace/commands#resize
 h = 'resize width -50'
 j = 'resize height +50'
 k = 'resize height -50'
