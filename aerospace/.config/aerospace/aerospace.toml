@@ -156,6 +156,7 @@ alt-shift-r = 'mode resize'
 alt-shift-s = 'exec-and-forget /Users/starks/.local/bin/aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal'
 alt-shift-m = 'exec-and-forget /Users/starks/.local/bin/aerospace-scratchpad.sh com.apple.MobileSMS Messages'
 alt-shift-w = 'exec-and-forget /Users/starks/.local/bin/aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp'
+alt-backslash = 'exec-and-forget /Users/starks/.local/bin/aerospace-toggle-terminal.sh'
 
 
 # 'service' binding mode declaration.
@@ -216,4 +217,9 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'net.whatsapp.WhatsApp'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "net.kovidgoyal.kitty"
+if.window-title-regex-substring = "toggleterm"
 run = 'layout floating'
