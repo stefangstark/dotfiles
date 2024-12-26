@@ -28,6 +28,12 @@ return {
         path = "/Users/starks/Documents/dnd/lost-mine-of-phandelver/campaigns/akarbasi",
       },
     },
-    -- see below for full list of options 👇
+    disable_frontmatter = true,
+    ui = {
+      checkboxes = {
+        [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+        ["x"] = { char = "", hl_group = "ObsidianDone" },
+      },
+    },
   },
 }
