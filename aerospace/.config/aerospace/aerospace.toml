@@ -105,17 +105,26 @@ alt-h = 'focus left'
 alt-j = 'focus down'
 alt-k = 'focus up'
 alt-l = 'focus right'
+alt-left = 'focus left'
+alt-down = 'focus down'
+alt-up = 'focus up'
+alt-right = 'focus right'
+
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+alt-shift-left = ['join-with left', 'mode main']
+alt-shift-down = ['join-with down', 'mode main']
+alt-shift-up = ['join-with up', 'mode main']
+alt-shift-right = ['join-with right', 'mode main']
 
 alt-ctrl-h = 'move left'
 alt-ctrl-j = 'move down'
 alt-ctrl-k = 'move up'
 alt-ctrl-l = 'move right'
+alt-ctrl-left = 'move left'
+alt-ctrl-down = 'move down'
+alt-ctrl-up = 'move up'
+alt-ctrl-right = 'move right'
 
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
@@ -151,6 +160,7 @@ cmd-esc = 'workspace-back-and-forth'
 alt-shift-semicolon = 'mode service'
 alt-shift-n = 'mode launch'
 alt-shift-r = 'mode resize'
+alt-x = 'mode disable'
 
 # scratch pads
 alt-shift-s = 'exec-and-forget /Users/starks/.local/bin/aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal'
@@ -197,7 +207,7 @@ alt-shift-f = [
 h = 'resize width -50'
 j = 'resize height +50'
 k = 'resize height -50'
-l = 'resize width +50'
+l = 'resize width +48'
 b = 'balance-sizes'
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
@@ -205,6 +215,9 @@ alt-shift-equal = 'resize smart +50'
 enter = 'mode main'
 esc = 'mode main'
 
+[mode.disable.binding]
+enter = 'mode main'
+esc = 'mode main'
 
 # Default window behaviors
 [[on-window-detected]]
