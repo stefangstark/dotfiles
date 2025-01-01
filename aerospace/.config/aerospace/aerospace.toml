@@ -6,11 +6,6 @@
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
 after-login-command = []
 
-# You can use it to add commands that run after AeroSpace startup.
-# 'after-startup-command' is run after 'after-login-command'
-# Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
-# ['exec-and-forget open -na Slack']
 
 # Start AeroSpace at login
 start-at-login = true
@@ -47,6 +42,9 @@ automatically-unhide-macos-hidden-apps = true
 # Possible values: (qwerty|dvorak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]
+# You can use it to add commands that run after AeroSpace startup.
+# 'after-startup-command' is run after 'after-login-command'
+# Available commands : https://nikitabobko.github.io/AeroSpace/commands
 preset = 'qwerty'
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
@@ -85,7 +83,7 @@ outer.right = 10
 
 # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
 
-alt-enter = 'exec-and-forget /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~'
+alt-enter = 'exec-and-forget kitty --single-instance -d ~'
 alt-f = 'fullscreen'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
@@ -117,11 +115,6 @@ alt-ctrl-j = 'move down'
 alt-ctrl-k = 'move up'
 alt-ctrl-l = 'move right'
 
-alt-shift-left = ['join-with left', 'mode main']
-alt-shift-down = ['join-with down', 'mode main']
-alt-shift-up = ['join-with up', 'mode main']
-alt-shift-right = ['join-with right', 'mode main']
-
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
@@ -145,8 +138,9 @@ alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
 alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-alt-tab = 'workspace-back-and-forth'
-cmd-esc = 'exec-and-forget aerospace focus-back-and-forth || aerospace workspace-back-and-forth'
+cmd-esc = 'workspace-back-and-forth'
+alt-backtick = 'exec-and-forget aerospace focus-back-and-forth || aerospace workspace-back-and-forth'
+cmd-backtick = 'exec-and-forget aerospace focus-back-and-forth || aerospace workspace-back-and-forth'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 # alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -158,15 +152,14 @@ alt-shift-r = 'mode resize'
 alt-x = 'mode disable'
 
 # scratch pads
-alt-shift-s = 'exec-and-forget /Users/starks/.local/bin/aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal'
-alt-shift-m = 'exec-and-forget /Users/starks/.local/bin/aerospace-scratchpad.sh com.apple.MobileSMS Messages'
-alt-shift-w = 'exec-and-forget /Users/starks/.local/bin/aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp'
-alt-backslash = 'exec-and-forget /Users/starks/.local/bin/aerospace-toggle-terminal.sh'
+alt-shift-s = 'exec-and-forget aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal'
+alt-shift-m = 'exec-and-forget aerospace-scratchpad.sh com.apple.MobileSMS Messages'
+alt-shift-w = 'exec-and-forget aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp'
+alt-backslash = 'exec-and-forget aerospace-toggle-terminal.sh'
 
 
-# 'service' binding mode declaration.
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
+semicolon = ['reload-config', 'mode main']
 esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
 f = [
@@ -186,24 +179,31 @@ up = 'volume up'
 shift-down = ['volume set 0', 'mode main']
 
 [mode.launch.binding]
-
-enter = [
-  'exec-and-forget /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~',
-  'mode main',
-]
-
-m = [
+enter = ['exec-and-forget kitty --single-instance -d ~', 'mode main']
+shift-m = [
   'exec-and-forget open -a Mail',
-  'exec-and-forget /Users/starks/.local/bin/aerospace-toggle-workspace.sh mail',
+  'exec-and-forget aerospace-toggle-workspace.sh mail',
   'mode main',
 ]
-f = ['exec-and-forget open -na /Applications/Zen\ Browser.app/', 'mode main']
-l = ['exec-and-forget open -na /Applications/Zen\ Browser.app/', 'mode main']
+n = ['exec-and-forget open -na Zen\ Browser.app', 'mode main']
 k = [
   'exec-and-forget open -a slack',
-  'exec-and-forget /Users/starks/.local/bin/aerospace-toggle-workspace.sh slack',
+  'exec-and-forget aerospace-toggle-workspace.sh slack',
   'mode main',
 ]
+s = [
+  'exec-and-forget aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal',
+  'mode main',
+]
+m = [
+  'exec-and-forget aerospace-scratchpad.sh com.apple.MobileSMS Messages',
+  'mode main',
+]
+w = [
+  'exec-and-forget aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp',
+  'mode main',
+]
+
 esc = 'mode main'
 
 [mode.resize.binding]
@@ -214,12 +214,9 @@ l = 'resize width +50'
 b = 'balance-sizes'
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
-
-enter = 'mode main'
 esc = 'mode main'
 
 [mode.disable.binding]
-enter = 'mode main'
 esc = 'mode main'
 
 # Default window behaviors
@@ -251,3 +248,11 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = "com.apple.mail"
 run = "move-node-to-workspace mail"
+
+[[on-window-detected]]
+if.app-id = "org.mozilla.com.zen.browser"
+if.window-title-regex-substring = "Library"
+run = 'layout floating'
+
+[exec.env-vars]
+PATH = '${HOME}/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'

@@ -5,7 +5,7 @@ set -euo pipefail
 CURRENT_WORKSPACE=$(aerospace list-workspaces --focused)
 
 launch() {
-  /Applications/kitty.app/Contents/MacOS/kitty --single-instance -o remember_window_size=no --title=toggleterm --session <(
+  kitty --single-instance -d ~ -o remember_window_size=no --title=toggleterm --session <(
     cat <<EOF
 os_window_size 120c 15c
 launch
