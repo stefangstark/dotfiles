@@ -1,0 +1,16 @@
+{
+  "hydra": {
+    "prefix": "hydra",
+    "body": [
+      "@hydra.main(version_base=None, config_path=${1:\"conf\"}, config_name=${2:\"config\"})",
+      "def main(cfg):",
+      "    ${0}",
+      "    return",
+      "",
+      "",
+      "if __name__ == \"__main__\":",
+      "    main()"
+    ],
+    "description": "Decorators for hydra configured program"
+  }
+}

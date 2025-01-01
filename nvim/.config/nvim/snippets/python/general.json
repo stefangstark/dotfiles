@@ -1,0 +1,6 @@
+{
+  "import from": {
+    "prefix": "from",
+    "body": "from ${1:...} import ${2:...}"
+  }
+}
