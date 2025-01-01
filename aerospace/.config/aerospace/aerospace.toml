@@ -1,10 +1,14 @@
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
-
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
 after-login-command = []
+
+after-startup-command = [
+  'exec-and-forget sketchybar',
+  'exec-and-forget borders active_color=0xddea999c, width=5.0',
+]
 
 exec-on-workspace-change = [
   '/bin/bash',
@@ -110,10 +114,10 @@ alt-j = 'focus down'
 alt-k = 'focus up'
 alt-l = 'focus right'
 
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+alt-shift-h = 'join-with left'
+alt-shift-j = 'join-with down'
+alt-shift-k = 'join-with up'
+alt-shift-l = 'join-with right'
 
 alt-ctrl-h = 'move left'
 alt-ctrl-j = 'move down'
@@ -155,32 +159,22 @@ alt-shift-semicolon = [
   'mode service',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=service',
 ]
+
 alt-esc = [
   'mode launch',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=launch',
 ]
-alt-shift-r = [
-  'mode resize',
-  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=resize',
-]
+
 alt-x = [
   'mode disable',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=disabled',
 ]
 
 # scratch pads
-alt-shift-s = 'exec-and-forget aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal'
-alt-shift-m = 'exec-and-forget aerospace-scratchpad.sh com.apple.MobileSMS Messages'
-alt-shift-w = 'exec-and-forget aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp'
 alt-backslash = 'exec-and-forget aerospace-toggle-terminal.sh'
 
 
 [mode.service.binding]
-semicolon = [
-  'reload-config',
-  'mode main',
-  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
-]
 
 esc = [
   'reload-config',
@@ -204,10 +198,14 @@ backspace = [
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 
-h = 'move left'
-j = 'move down'
-k = 'move up'
-l = 'move right'
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+b = 'balance-sizes'
+
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
 
 down = 'volume down'
 up = 'volume up'
@@ -218,7 +216,11 @@ shift-down = [
 ]
 
 [mode.launch.binding]
-enter = ['exec-and-forget kitty --single-instance -d ~', 'mode main']
+enter = [
+  'exec-and-forget kitty --single-instance -d ~',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
 shift-m = [
   'exec-and-forget open -a Mail',
   'exec-and-forget aerospace-toggle-workspace.sh mail',
@@ -257,20 +259,6 @@ esc = [
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
-
-[mode.resize.binding]
-h = 'resize width -50'
-j = 'resize height +50'
-k = 'resize height -50'
-l = 'resize width +50'
-b = 'balance-sizes'
-alt-shift-minus = 'resize smart -50'
-alt-shift-equal = 'resize smart +50'
-esc = [
-  'mode main',
-  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
-]
-
 
 [mode.disable.binding]
 esc = [
