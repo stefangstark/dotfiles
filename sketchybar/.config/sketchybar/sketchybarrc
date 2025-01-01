@@ -15,13 +15,14 @@ HIGHLIGHT_TEXT_COLOR=0xCC"${COLOR_MAROON}"
 HIGHLIGHT_BORDER_COLOR=0xCC"${COLOR_MAROON}"
 
 sketchybar --bar position=top height=34 color=0xff"${COLOR_SURFACE0}"
+sketchybar --add event aerospace_mode_change
 
 ##### Changing Defaults #####
 default=(
   padding_left=4
   padding_right=4
   icon.font="FiraCode Nerd Font:Bold:17.0"
-  label.font="FiraCode Nerd Font:Bold:14.0"
+  label.font="JetBrainsMono Nerd Font:Bold:14.0"
   icon.color=${DEFAULT_TEXT_COLOR}
   label.color=${DEFAULT_TEXT_COLOR}
   icon.padding_left=8
@@ -31,9 +32,10 @@ default=(
   background.color="$DEFAULT_BACKGROUND_COLOR"
   background.border_width=1
   background.border_color=0xff"${COLOR_SURFACE0}"
-  background.corner_radius=20
-  background.height=23
+  background.corner_radius=7
+  background.height=25
   blur_radius=30
+  background.drawing=off
 )
 
 sketchybar --default "${default[@]}"
@@ -60,20 +62,43 @@ for sid in $(echo $workspaces); do
     icon.font="Hack Nerd Font:Bold:14.0" \
     label.font="sketchybar-app-font:Normal:12.0" \
     label.y_offset=-1 \
-    background.drawing=on \
+    background.drawing=off \
     background.height=25 \
     background.corner_radius=7 \
     icon="$sid" \
-    click_script="aerospace workspace $sid"
+    click_script="aerospace workspace $sid" \
+    drawing=off
 
 done
 
-sketchybar --add item clock right \
-  --set clock update_freq=10 icon= script=${PLUGIN_DIR}/"clock.sh" padding_right=-8 label.color=0xFF992B3F5 icon.font="Hack Nerd Font:Bold:15.0" label.font="Hack Nerd Font:Bold:15.0" \
-  --add item battery right \
-  --set battery label.font="Hack Nerd Font:Bold:15.0" update_freq=150 script=${PLUGIN_DIR}/"battery.sh" \
-  icon.font="Hack Nerd Font:Regular:17.0" icon.y_offset=1 label.color=0xFF992B3F5 \
+sketchybar --add item clock right --set clock \
+  update_freq=10 \
+  script=${PLUGIN_DIR}/"clock.sh" \
+  padding_right=-8 \
+  label.font="Lucida Grande:Regular:14.0" \
+  icon.drawing=off \
+  label.y_offset=0 \
+  padding_left=2
+
+sketchybar --add item battery right --set battery \
+  update_freq=150 \
+  script=${PLUGIN_DIR}/"battery.sh" \
+  icon.font="Lucida Grande:Regular:17.0" \
+  icon.y_offset=0 \
+  label.drawing=off \
+  padding_left=8 padding_right=8 \
   --subscribe battery system_woke power_source_change
+
+sketchybar --add item aerospace-mode q --set aerospace-mode \
+  icon.drawing=off \
+  label.drawing=off \
+  background.drawing=off \
+  background.corner_radius=7 \
+  label.padding_left=8 \
+  label.padding_right=8 \
+  background.height=25 \
+  script=${PLUGIN_DIR}/"aerospace_mode.sh" \
+  --subscribe aerospace-mode aerospace_mode_change
 
 # sketchybar --add bracket spaces '/space\..*/'
 #
@@ -114,5 +139,5 @@ sketchybar --add item clock right \
 #   icon.font="SF Pro:Regular:17.0" icon.y_offset=1 label.color=0xFF992B3F5 \
 #   --subscribe battery system_woke power_source_change
 
-sketchybar --hotload
 sketchybar --update
+${CONFIG_DIR}/update-workspaces.sh $(aerospace list-workspaces --focused)
