@@ -1,0 +1,3 @@
+map <C-w> quit
+set selection-clipboard clipboard
+include catppuccin-latte
