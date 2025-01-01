@@ -6,6 +6,11 @@
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
 after-login-command = []
 
+exec-on-workspace-change = [
+  '/bin/bash',
+  '-c',
+  '${HOME}/.config/sketchybar/update-workspaces.sh $AEROSPACE_FOCUSED_WORKSPACE $AEROSPACE_PREV_WORKSPACE',
+]
 
 # Start AeroSpace at login
 start-at-login = true
