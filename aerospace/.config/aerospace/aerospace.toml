@@ -11,9 +11,9 @@ after-startup-command = [
 ]
 
 exec-on-workspace-change = [
-  # '/bin/bash',
-  # '-c',
-  # '${HOME}/.config/sketchybar/update-workspaces.sh $AEROSPACE_FOCUSED_WORKSPACE $AEROSPACE_PREV_WORKSPACE',
+  '/bin/bash',
+  '-c',
+  'sketchybar --trigger aerospace_workspace_change',
 ]
 
 # Start AeroSpace at login
@@ -95,36 +95,22 @@ outer.right = 10
 alt-enter = 'exec-and-forget kitty --single-instance -d ~'
 alt-f = 'fullscreen'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
-# You can uncomment the following lines to open up terminal with alt + enter shortcut (like in i3)
-# alt-enter = '''exec-and-forget osascript -e '
-# tell application "Terminal"
-#     do script
-#     activate
-# end tell'
-# '''
-
-# See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#focus
 alt-h = 'focus left'
 alt-j = 'focus down'
 alt-k = 'focus up'
 alt-l = 'focus right'
-
 alt-shift-h = 'join-with left'
 alt-shift-j = 'join-with down'
 alt-shift-k = 'join-with up'
 alt-shift-l = 'join-with right'
-
 alt-ctrl-h = 'move left'
 alt-ctrl-j = 'move down'
 alt-ctrl-k = 'move up'
 alt-ctrl-l = 'move right'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
@@ -135,7 +121,6 @@ alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
 alt-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
 alt-shift-3 = ['move-node-to-workspace 3', 'workspace 3']
@@ -146,67 +131,48 @@ alt-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
 alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
 alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 cmd-esc = 'workspace-back-and-forth'
 alt-backtick = 'exec-and-forget aerospace focus-back-and-forth || aerospace workspace-back-and-forth'
 cmd-backtick = 'exec-and-forget aerospace focus-back-and-forth || aerospace workspace-back-and-forth'
-
-# See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-# alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
-
-# See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = [
   'mode service',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=service',
 ]
-
 alt-esc = [
   'mode launch',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=launch',
 ]
-
 alt-x = [
   'mode disable',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=disabled',
 ]
-
-# scratch pads
 alt-backslash = 'exec-and-forget aerospace-toggle-terminal.sh'
 
 
 [mode.service.binding]
 
-esc = [
-  'reload-config',
-  'mode main',
-  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
-]
 r = [
   'flatten-workspace-tree',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
-] # reset layout
+]
 f = [
   'layout floating tiling',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
-] # Toggle between floating and tiling layout
-
+]
 backspace = [
   'close-all-windows-but-current',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
-
 h = 'resize width -50'
 j = 'resize height +50'
 k = 'resize height -50'
 l = 'resize width +50'
 b = 'balance-sizes'
-
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
-
 down = 'volume down'
 up = 'volume up'
 shift-down = [
@@ -214,6 +180,12 @@ shift-down = [
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
+esc = [
+  'reload-config',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+
 
 [mode.launch.binding]
 enter = [
@@ -252,9 +224,7 @@ w = [
   'exec-and-forget aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
-
 ]
-
 esc = [
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
@@ -266,7 +236,6 @@ esc = [
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 
-# Default window behaviors
 [[on-window-detected]]
 if.app-id = 'org.whispersystems.signal-desktop'
 run = 'layout floating'

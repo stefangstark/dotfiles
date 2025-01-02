@@ -4,20 +4,10 @@ PLUGIN_DIR=${CONFIG_DIR}/plugins
 
 source ${CONFIG_DIR}/colors/catppuccin-frappe.sh
 
-##### Bar Appearance #####
-
-DEFAULT_BACKGROUND_COLOR=0xff"${COLOR_SURFACE2}"
-DEFAULT_TEXT_COLOR=0xff"${COLOR_TEXT}"
-DEFAULT_BORDER_COLOR=0xff"${COLOR_SURFACE0}"
-
-HIGHLIGHT_BACKGROUND_COLOR=0xff"${COLOR_SURFACE2}"
-HIGHLIGHT_TEXT_COLOR=0xCC"${COLOR_MAROON}"
-HIGHLIGHT_BORDER_COLOR=0xCC"${COLOR_MAROON}"
-
 sketchybar --bar position=top height=34 color=0xff"${COLOR_SURFACE0}"
 sketchybar --add event aerospace_mode_change
+sketchybar --add event aerospace_workspace_change
 
-##### Changing Defaults #####
 default=(
   padding_left=4
   padding_right=4
@@ -40,19 +30,14 @@ default=(
 
 sketchybar --default "${default[@]}"
 
-##### Adding Apple Logo #####
-
-# TODO: add aerospace mode indicator
 sketchybar --add item logo left \
   --set logo icon="" \
-  icon.font="Hack Nerd Font:Bold:23.0" \
+  icon.font="Hack Nerd Font:Bold:20.0" \
   label.drawing=off \
   icon.padding_left=9 \
   icon.y_offset=1 \
   background.drawing=off \
   padding_left=-8
-
-##### Adding Workspaces Indicators #####
 
 workspaces=$(aerospace list-workspaces --all)
 for sid in $(echo $workspaces); do
@@ -71,10 +56,11 @@ for sid in $(echo $workspaces); do
 
 done
 
+# HACK: updating bar with events tied to hidden item
 sketchybar --add item workspace-daemon left \
   --set workspace-daemon drawing=off \
   script=${CONFIG_DIR}/update-workspaces.sh \
-  --subscribe workspace-daemon front_app_switched
+  --subscribe workspace-daemon front_app_switched aerospace_workspace_change
 
 sketchybar --add item clock right --set clock \
   update_freq=10 \

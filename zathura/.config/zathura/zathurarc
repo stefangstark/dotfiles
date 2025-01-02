@@ -1,3 +1,4 @@
 map <C-w> quit
 set selection-clipboard clipboard
+set window-title-basename true
 include catppuccin-latte

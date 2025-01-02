@@ -1,17 +1,23 @@
 #!/usr/bin/env bash
 
-CONFIG_DIR=$(dirname $0)
-
-# HACK: should be done with subscription events ...
 source ${CONFIG_DIR}/colors/catppuccin-frappe.sh
 
-DEFAULT_BACKGROUND_COLOR=0xff"${COLOR_SURFACE2}"
-DEFAULT_TEXT_COLOR=0xff"${COLOR_TEXT}"
-DEFAULT_BORDER_COLOR=0xff"${COLOR_SURFACE0}"
+current_workspace=$(aerospace list-workspaces --focused)
 
-HIGHLIGHT_BACKGROUND_COLOR=0xff"${COLOR_SURFACE2}"
-HIGHLIGHT_TEXT_COLOR=0xCC"${COLOR_MAROON}"
-HIGHLIGHT_BORDER_COLOR=0xCC"${COLOR_MAROON}"
+# quick update workspace color changes
+[ ! -z ${AEROSPACE_CURRENT_SPACE} ] &&
+  sketchybar --set "space.$AEROSPACE_CURRENT_SPACE" \
+    drawing=on \
+    background.border_color=${HIGHLIGHT_BORDER_COLOR} \
+    label.color=${HIGHLIGHT_TEXT_COLOR} \
+    icon.color=${HIGHLIGHT_TEXT_COLOR}
+
+[ ! -z ${AEROSPACE_PREV_WORKSPACE} ] &&
+  sketchybar --set "space.$AEROSPACE_CURRENT_SPACE" \
+    drawing=on \
+    background.border_color=${DEFAULT_BORDER_COLOR} \
+    label.color=${DEFAULT_TEXT_COLOR} \
+    icon.color=${DEFAULT_TEXT_COLOR}
 
 # Those query take a lot of time (100ms)
 workspace_query_json=$(
@@ -24,9 +30,9 @@ windows_query_json=$(
     --format '%{workspace} %{app-name}' \
     --json
 )
-current_workspace=$(aerospace list-workspaces --focused)
 
 source ${CONFIG_DIR}/icon_map.sh
+# TODO: make current window default
 for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep -v NSP); do
 
   workspace_display_id=$(
@@ -61,6 +67,7 @@ for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep 
   # Reset IFS to its default value
   unset IFS
 
+  # INFO: add fullscreen color when aerospace implements
   if [[ $workspace == $current_workspace ]]; then
     background_border_color=${HIGHLIGHT_BORDER_COLOR}
     text_color=${HIGHLIGHT_TEXT_COLOR}

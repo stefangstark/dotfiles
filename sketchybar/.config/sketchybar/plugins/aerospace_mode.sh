@@ -9,7 +9,7 @@ main | "")
 
 disabled)
   sketchybar --set $NAME \
-    label="disabled" \
+    label=${AEROSPACE_MODE} \
     label.drawing=on \
     label.color=0xff"${COLOR_SURFACE0}" \
     background.drawing=on \
