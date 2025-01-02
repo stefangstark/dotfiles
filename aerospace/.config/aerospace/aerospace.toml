@@ -1,11 +1,20 @@
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
-
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
 # Available commands: https://nikitabobko.github.io/AeroSpace/commands
 after-login-command = []
 
+after-startup-command = [
+  'exec-and-forget sketchybar',
+  'exec-and-forget borders active_color=0xddea999c, width=5.0',
+]
+
+exec-on-workspace-change = [
+  '/bin/bash',
+  '-c',
+  '${HOME}/.config/sketchybar/update-workspaces.sh $AEROSPACE_FOCUSED_WORKSPACE $AEROSPACE_PREV_WORKSPACE',
+]
 
 # Start AeroSpace at login
 start-at-login = true
@@ -105,10 +114,10 @@ alt-j = 'focus down'
 alt-k = 'focus up'
 alt-l = 'focus right'
 
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+alt-shift-h = 'join-with left'
+alt-shift-j = 'join-with down'
+alt-shift-k = 'join-with up'
+alt-shift-l = 'join-with right'
 
 alt-ctrl-h = 'move left'
 alt-ctrl-j = 'move down'
@@ -146,78 +155,116 @@ cmd-backtick = 'exec-and-forget aerospace focus-back-and-forth || aerospace work
 # alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-alt-shift-semicolon = 'mode service'
-alt-esc = 'mode launch'
-alt-shift-r = 'mode resize'
-alt-x = 'mode disable'
+alt-shift-semicolon = [
+  'mode service',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=service',
+]
+
+alt-esc = [
+  'mode launch',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=launch',
+]
+
+alt-x = [
+  'mode disable',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=disabled',
+]
 
 # scratch pads
-alt-shift-s = 'exec-and-forget aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal'
-alt-shift-m = 'exec-and-forget aerospace-scratchpad.sh com.apple.MobileSMS Messages'
-alt-shift-w = 'exec-and-forget aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp'
 alt-backslash = 'exec-and-forget aerospace-toggle-terminal.sh'
 
 
 [mode.service.binding]
-semicolon = ['reload-config', 'mode main']
-esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
+
+esc = [
+  'reload-config',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+r = [
+  'flatten-workspace-tree',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+] # reset layout
 f = [
   'layout floating tiling',
   'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ] # Toggle between floating and tiling layout
 
-backspace = ['close-all-windows-but-current', 'mode main']
-
-h = 'move left'
-j = 'move down'
-k = 'move up'
-l = 'move right'
-
-down = 'volume down'
-up = 'volume up'
-shift-down = ['volume set 0', 'mode main']
-
-[mode.launch.binding]
-enter = ['exec-and-forget kitty --single-instance -d ~', 'mode main']
-shift-m = [
-  'exec-and-forget open -a Mail',
-  'exec-and-forget aerospace-toggle-workspace.sh mail',
+backspace = [
+  'close-all-windows-but-current',
   'mode main',
-]
-n = ['exec-and-forget open -na Zen\ Browser.app', 'mode main']
-k = [
-  'exec-and-forget open -a slack',
-  'exec-and-forget aerospace-toggle-workspace.sh slack',
-  'mode main',
-]
-s = [
-  'exec-and-forget aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal',
-  'mode main',
-]
-m = [
-  'exec-and-forget aerospace-scratchpad.sh com.apple.MobileSMS Messages',
-  'mode main',
-]
-w = [
-  'exec-and-forget aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp',
-  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 
-esc = 'mode main'
-
-[mode.resize.binding]
 h = 'resize width -50'
 j = 'resize height +50'
 k = 'resize height -50'
 l = 'resize width +50'
 b = 'balance-sizes'
+
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
-esc = 'mode main'
+
+down = 'volume down'
+up = 'volume up'
+shift-down = [
+  'volume set 0',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+
+[mode.launch.binding]
+enter = [
+  'exec-and-forget kitty --single-instance -d ~',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+shift-m = [
+  'exec-and-forget open -a Mail',
+  'exec-and-forget aerospace-toggle-workspace.sh mail',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+n = [
+  'exec-and-forget open -na Zen\ Browser.app',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+k = [
+  'exec-and-forget open -a slack',
+  'exec-and-forget aerospace-toggle-workspace.sh slack',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+s = [
+  'exec-and-forget aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+m = [
+  'exec-and-forget aerospace-scratchpad.sh com.apple.MobileSMS Messages',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+w = [
+  'exec-and-forget aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+
+]
+
+esc = [
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
 
 [mode.disable.binding]
-esc = 'mode main'
+esc = [
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
 
 # Default window behaviors
 [[on-window-detected]]
