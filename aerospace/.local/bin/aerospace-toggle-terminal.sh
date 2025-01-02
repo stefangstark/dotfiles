@@ -25,9 +25,9 @@ is_app_closed() {
     grep -q kitty-toggleterm
 }
 
-# main() {
 is_app_closed && launch && exit 0
 
+# TODO: if app is local but not focused, focus it
 app_window_id=$(get_window_id)
 aerospace list-windows --workspace "$CURRENT_WORKSPACE" --format "%{window-id}%{right-padding}" |
   grep -q "$app_window_id" &&

@@ -71,6 +71,11 @@ for sid in $(echo $workspaces); do
 
 done
 
+sketchybar --add item workspace-daemon left \
+  --set workspace-daemon drawing=off \
+  script=${CONFIG_DIR}/update-workspaces.sh \
+  --subscribe workspace-daemon front_app_switched
+
 sketchybar --add item clock right --set clock \
   update_freq=10 \
   script=${PLUGIN_DIR}/"clock.sh" \
@@ -100,44 +105,4 @@ sketchybar --add item aerospace-mode q --set aerospace-mode \
   script=${PLUGIN_DIR}/"aerospace_mode.sh" \
   --subscribe aerospace-mode aerospace_mode_change
 
-# sketchybar --add bracket spaces '/space\..*/'
-#
-# sketchybar --add item front_app.app e \
-#   --set front_app.app \
-#   icon.font="sketchybar-app-font:Normal:16.0" \
-#   icon.color=0xFFFFB74D \
-#   label.color=0xFFFFFFFF \
-#   padding_right=0 \
-#   label.max_chars=16 \
-#   scroll_texts=on \
-#   background.drawing=off \
-#   script="${CONFIG_DIR}/front_app.sh" \
-#   --subscribe front_app.app front_app_switched
-#
-# sketchybar --add item front_app.title e \
-#   --set front_app.title \
-#   label.font="Hack Nerd Font:Bold:12.0" \
-#   label.color=0xFF992B3F5 \
-#   label.max_chars=26 \
-#   padding_left=0 \
-#   scroll_texts=on \
-#   icon.drawing=off \
-#   background.drawing=off \
-#   label = "Title" \
-#   script="${CONFIG_DIR}/front_app_title.sh" \
-#   --subscribe front_app.title front_app_switched
-#
-# sketchybar --add bracket front_app '/front_app.*/'
-
-# sketchybar --add item clock right \
-#   --set clock update_freq=10 icon= script="/nix/store/myzvvjkv1ybr4hm2864yn7b9vlv42k38-clock.sh" padding_right=-8 label.color=0xFF992B3F5 label.font="Hack Nerd Font:Bold:12.0" \
-#   --add item volume right \
-#   --set volume script="/nix/store/fx1lz7jvpbczpa2j0h9h4yxf6ag1wjqh-volume.sh" label.color=0xFF992B3F5 label.font="Hack Nerd Font:Bold:12.0" \
-#   --subscribe volume volume_change \
-#   --add item battery right \
-#   --set battery label.font="Hack Nerd Font:Bold:12.0" update_freq=120 script="/nix/store/r3wwhcffp3fca6firwqs75ia64nmg0pz-battery.sh" \
-#   icon.font="SF Pro:Regular:17.0" icon.y_offset=1 label.color=0xFF992B3F5 \
-#   --subscribe battery system_woke power_source_change
-
 sketchybar --update
-${CONFIG_DIR}/update-workspaces.sh $(aerospace list-workspaces --focused)
