@@ -39,7 +39,7 @@ sketchybar --add item logo left \
   background.drawing=off \
   padding_left=-8
 
-workspaces=$(aerospace list-workspaces --all)
+workspaces=$(printf "%s\n" $(aerospace list-workspaces --all) mail slack NSP | sort | uniq)
 for sid in $(echo $workspaces); do
 
   sketchybar --add item space.$sid left \

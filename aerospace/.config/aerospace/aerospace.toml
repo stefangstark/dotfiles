@@ -13,7 +13,7 @@ after-startup-command = [
 exec-on-workspace-change = [
   '/bin/bash',
   '-c',
-  'sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=AEROSPACE_PREV_WORKSPACE',
+  'sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE="$AEROSPACE_FOCUSED_WORKSPACE" AEROSPACE_PREV_WORKSPACE="$AEROSPACE_PREV_WORKSPACE"',
 ]
 
 # Start AeroSpace at login
@@ -120,6 +120,8 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
+alt-leftSquareBracket = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | grep -v -e NSP -e slack -e mail | aerospace workspace --wrap-around prev'
+alt-rightSquareBracket = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | grep -v -e NSP -e slack -e mail | aerospace workspace --wrap-around next'
 
 alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
 alt-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
@@ -173,7 +175,6 @@ l = 'resize width +50'
 b = 'balance-sizes'
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
-
 down = 'volume down'
 up = 'volume up'
 shift-down = [

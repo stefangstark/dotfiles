@@ -2,24 +2,23 @@
 
 source ${CONFIG_DIR}/colors/catppuccin-frappe.sh
 
-current_workspace=$(aerospace list-workspaces --focused)
-
 # quick update workspace color changes
-[ ! -z ${AEROSPACE_CURRENT_SPACE} ] &&
-  sketchybar --set "space.$AEROSPACE_CURRENT_SPACE" \
+[ ! -z ${AEROSPACE_FOCUSED_WORKSPACE} ] &&
+  sketchybar --set "space.$AEROSPACE_FOCUSED_WORKSPACE" \
     drawing=on \
     background.border_color=${HIGHLIGHT_BORDER_COLOR} \
     label.color=${HIGHLIGHT_TEXT_COLOR} \
     icon.color=${HIGHLIGHT_TEXT_COLOR}
 
 [ ! -z ${AEROSPACE_PREV_WORKSPACE} ] &&
-  sketchybar --set "space.$AEROSPACE_CURRENT_SPACE" \
-    drawing=on \
+  sketchybar --set "space.$AEROSPACE_PREV_WORKSPACE" \
+    drawing=$([[ $AEROSPACE_PREV_WORKSPACE == [0-9] ]] && echo on || echo off) \
     background.border_color=${DEFAULT_BORDER_COLOR} \
     label.color=${DEFAULT_TEXT_COLOR} \
     icon.color=${DEFAULT_TEXT_COLOR}
 
 # Those query take a lot of time (100ms)
+AEROSPACE_FOCUSED_WORKSPACE=${AEROSPACE_FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused)}
 workspace_query_json=$(
   aerospace list-workspaces --all \
     --format '%{workspace}%{monitor-appkit-nsscreen-screens-id}' \
@@ -32,7 +31,6 @@ windows_query_json=$(
 )
 
 source ${CONFIG_DIR}/icon_map.sh
-# TODO: make current window default
 for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep -v NSP); do
 
   workspace_display_id=$(
@@ -50,7 +48,7 @@ for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep 
   )
 
   # check if any windows in the workspace
-  if [ "$windows_in_workspace" = "" ]; then
+  if [ ! $workspace == $AEROSPACE_FOCUSED_WORKSPACE ] && [ "$windows_in_workspace" = "" ]; then
     sketchybar --set "space.$workspace" drawing=off
     continue
   fi
@@ -68,7 +66,7 @@ for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep 
   unset IFS
 
   # INFO: add fullscreen color when aerospace implements
-  if [[ $workspace == $current_workspace ]]; then
+  if [[ $workspace == $AEROSPACE_FOCUSED_WORKSPACE ]]; then
     background_border_color=${HIGHLIGHT_BORDER_COLOR}
     text_color=${HIGHLIGHT_TEXT_COLOR}
   else
