@@ -1,38 +1,51 @@
 #!/usr/bin/env bash
 
+# Requires this to be in aerospace.toml:
+#   [[on-window-detected]]
+#   if.app-id = "net.kovidgoyal.kitty"
+#   if.window-title-regex-substring = "toggleterm"
+#   run = 'layout floating'
+#
+
 set -euo pipefail
 
-CURRENT_WORKSPACE=$(aerospace list-workspaces --focused)
+windows=$(
+  aerospace list-windows --all --json \
+    --format '%{window-id}%{window-title}%{app-name}%{workspace}'
+)
 
-launch() {
-  kitty --single-instance -d ~ -o remember_window_size=no --title=toggleterm --session <(
-    cat <<EOF
-os_window_size 120c 15c
-launch
-EOF
-  )
-}
+target=$(
+  echo $windows |
+    jq '.[] | select(
+        (.["app-name"] == "kitty") and
+        (.["window-title"] == "toggleterm")
+      )'
+)
 
-get_window_id() {
-  aerospace list-windows --all --format "%{window-id}%{right-padding} | %{app-name}-%{window-title}" |
-    grep kitty-toggleterm |
-    cut -d' ' -f1 |
-    head -n1
-}
+window_id=$(echo $target | jq '.["window-id"]')
 
-is_app_closed() {
-  ! aerospace list-windows --all --format '%{app-name}-%{window-title}' |
-    grep -q kitty-toggleterm
-}
-
-is_app_closed && launch && exit 0
-
-# TODO: if app is local but not focused, focus it
-app_window_id=$(get_window_id)
-aerospace list-windows --workspace "$CURRENT_WORKSPACE" --format "%{window-id}%{right-padding}" |
-  grep -q "$app_window_id" &&
-  aerospace move-node-to-workspace NSP --window-id "$app_window_id" &&
+[[ -z $window_id ]] &&
+  kitty \
+    -d ~ \
+    --single-instance \
+    --title=toggleterm \
+    -o remember_window_size=no \
+    -o initial_window_width=120c \
+    -o initial_window_height=15c &&
   exit 0
 
-aerospace move-node-to-workspace "$CURRENT_WORKSPACE" --window-id "$app_window_id" &&
-  aerospace focus --window-id "$app_window_id"
+workspace=$(echo $target | jq '.["workspace"]')
+workspace_focused=$(aerospace list-workspaces --focused)
+
+[[ ${workspace} == \"NSP\" ]] && # No idea why quotes are included
+  aerospace move-node-to-workspace $workspace_focused --window-id $window_id &&
+  aerospace focus --window-id $window_id &&
+  exit 0
+
+focused=$(aerospace list-windows --focused --format '%{window-id}')
+
+[[ ! "$window_id" == "$focused" ]] &&
+  aerospace focus --window-id $window_id &&
+  exit 0
+
+aerospace move-node-to-workspace NSP --window-id $window_id
