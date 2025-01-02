@@ -13,7 +13,7 @@ after-startup-command = [
 exec-on-workspace-change = [
   '/bin/bash',
   '-c',
-  'sketchybar --trigger aerospace_workspace_change',
+  'sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=AEROSPACE_PREV_WORKSPACE',
 ]
 
 # Start AeroSpace at login
@@ -147,7 +147,7 @@ alt-x = [
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=disabled',
 ]
 alt-backslash = 'exec-and-forget aerospace-toggle-terminal.sh'
-
+alt-tab = 'exec-and-forget kitty -o remember_window_size=no -o close_on_child_death=no -o macos_quit_when_last_window_closed=yes -o macos_hide_from_tasks=yes --title=switch -- $HOME/.local/bin/switch'
 
 [mode.service.binding]
 
@@ -173,6 +173,7 @@ l = 'resize width +50'
 b = 'balance-sizes'
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
+
 down = 'volume down'
 up = 'volume up'
 shift-down = [
@@ -185,7 +186,6 @@ esc = [
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
-
 
 [mode.launch.binding]
 enter = [
@@ -251,6 +251,11 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = "net.kovidgoyal.kitty"
 if.window-title-regex-substring = "toggleterm"
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "net.kovidgoyal.kitty"
+if.window-title-regex-substring = "switch"
 run = 'layout floating'
 
 [[on-window-detected]]
