@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-focused_workspace=$1
-last_workspace=$2
 CONFIG_DIR=$(dirname $0)
 
 # HACK: should be done with subscription events ...
@@ -15,18 +13,6 @@ HIGHLIGHT_BACKGROUND_COLOR=0xff"${COLOR_SURFACE2}"
 HIGHLIGHT_TEXT_COLOR=0xCC"${COLOR_MAROON}"
 HIGHLIGHT_BORDER_COLOR=0xCC"${COLOR_MAROON}"
 
-sketchybar --set "space.$focused_workspace" \
-  background.border_color=${HIGHLIGHT_BORDER_COLOR} \
-  label.color=${HIGHLIGHT_TEXT_COLOR} \
-  icon.color=${HIGHLIGHT_TEXT_COLOR}
-
-if [ ! "$2" = "" ]; then
-  sketchybar --set "space.$last_workspace" \
-    background.border_color=${DEFAULT_BORDER_COLOR} \
-    label.color=${DEFAULT_TEXT_COLOR} \
-    icon.color=${DEFAULT_TEXT_COLOR}
-fi
-
 # Those query take a lot of time (100ms)
 workspace_query_json=$(
   aerospace list-workspaces --all \
@@ -38,8 +24,9 @@ windows_query_json=$(
     --format '%{workspace} %{app-name}' \
     --json
 )
+current_workspace=$(aerospace list-workspaces --focused)
 
-# Update per workspace
+source ${CONFIG_DIR}/icon_map.sh
 for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep -v NSP); do
 
   workspace_display_id=$(
@@ -62,7 +49,6 @@ for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep 
     continue
   fi
 
-  source ${CONFIG_DIR}/icon_map.sh
   label=""
   label_font="sketchybar-app-font:Normal:12.0"
   # Set IFS to newline to handle multi-word app names correctly
@@ -74,12 +60,21 @@ for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep 
   done
   # Reset IFS to its default value
   unset IFS
-  # echo $workspace $label
+
+  if [[ $workspace == $current_workspace ]]; then
+    background_border_color=${HIGHLIGHT_BORDER_COLOR}
+    text_color=${HIGHLIGHT_TEXT_COLOR}
+  else
+    background_border_color=${DEFAULT_BORDER_COLOR}
+    text_color=${DEFAULT_TEXT_COLOR}
+  fi
 
   sketchybar --set "space.$workspace" \
     drawing=on \
     label="$label" \
     label.font="$label_font" \
-    display="$workspace_display_id"
-
+    display="$workspace_display_id" \
+    background.border_color=${background_border_color} \
+    label.color=${text_color} \
+    icon.color=${text_color}
 done
