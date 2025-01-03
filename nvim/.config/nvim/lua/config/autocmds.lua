@@ -15,6 +15,18 @@ vim.api.nvim_create_autocmd({ "VimEnter", "BufReadPre", "FileType" }, {
   end,
 })
 
+vim.api.nvim_create_autocmd("User", {
+  pattern = "PersistenceSavePre",
+  callback = function()
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      local bufpath = vim.api.nvim_buf_get_name(buf) .. "/"
+      if bufpath:match("^" .. vim.pesc("/private/tmp")) then
+        vim.api.nvim_buf_delete(buf, {})
+      end
+    end
+  end,
+})
+
 --
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.tex", "*.md" },
