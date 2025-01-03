@@ -3,7 +3,7 @@
 # Requires this to be in aerospace.toml:
 #   [[on-window-detected]]
 #   if.app-id = "net.kovidgoyal.kitty"
-#   if.window-title-regex-substring = "toggleterm"
+#   if.window-title-regex-substring = "aerospace-.*"
 #   run = 'layout floating'
 #
 
@@ -18,7 +18,7 @@ target=$(
   echo $windows |
     jq '.[] | select(
         (.["app-name"] == "kitty") and
-        (.["window-title"] == "toggleterm")
+        (.["window-title"] == "aerospace-toggleterm")
       )'
 )
 
@@ -28,7 +28,7 @@ window_id=$(echo $target | jq '.["window-id"]')
   kitty \
     -d ~ \
     --single-instance \
-    --title=toggleterm \
+    --title=aerospace-toggleterm \
     -o remember_window_size=no \
     -o initial_window_width=120c \
     -o initial_window_height=15c &&

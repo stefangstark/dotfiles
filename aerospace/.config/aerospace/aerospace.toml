@@ -10,11 +10,11 @@ after-startup-command = [
   'exec-and-forget borders active_color=0xddea999c, width=5.0',
 ]
 
-exec-on-workspace-change = [
-  '/bin/bash',
-  '-c',
-  'sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE="$AEROSPACE_FOCUSED_WORKSPACE" AEROSPACE_PREV_WORKSPACE="$AEROSPACE_PREV_WORKSPACE"',
-]
+exec-on-workspace-change = ['/bin/bash', '-c', """
+  sketchybar --trigger aerospace_workspace_change \
+  AEROSPACE_FOCUSED_WORKSPACE="$AEROSPACE_FOCUSED_WORKSPACE"  \
+  AEROSPACE_PREV_WORKSPACE="$AEROSPACE_PREV_WORKSPACE"
+  """]
 
 # Start AeroSpace at login
 start-at-login = true
@@ -120,8 +120,16 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
-alt-leftSquareBracket = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | grep -v -e NSP -e slack -e mail | aerospace workspace --wrap-around prev'
-alt-rightSquareBracket = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | grep -v -e NSP -e slack -e mail | aerospace workspace --wrap-around next'
+alt-leftSquareBracket = '''
+exec-and-forget aerospace list-workspaces --empty no --monitor focused | 
+grep \[0-9\] | 
+aerospace workspace --wrap-around prev
+'''
+alt-rightSquareBracket = '''
+exec-and-forget aerospace list-workspaces --empty no --monitor focused | 
+grep \[0-9\] | 
+aerospace workspace --wrap-around next
+'''
 
 alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
 alt-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
@@ -134,8 +142,14 @@ alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
 alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
 cmd-esc = 'workspace-back-and-forth'
-alt-backtick = 'exec-and-forget aerospace focus-back-and-forth || aerospace workspace-back-and-forth'
-cmd-backtick = 'exec-and-forget aerospace focus-back-and-forth || aerospace workspace-back-and-forth'
+alt-backtick = '''
+exec-and-forget aerospace focus-back-and-forth ||
+aerospace workspace-back-and-forth
+'''
+cmd-backtick = '''
+exec-and-forget aerospace focus-back-and-forth || 
+aerospace workspace-back-and-forth
+'''
 alt-shift-semicolon = [
   'mode service',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=service',
@@ -149,7 +163,17 @@ alt-x = [
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=disabled',
 ]
 alt-backslash = 'exec-and-forget aerospace-toggle-terminal.sh'
-alt-tab = 'exec-and-forget kitty -o remember_window_size=no -o close_on_child_death=no -o macos_quit_when_last_window_closed=yes -o macos_hide_from_tasks=yes --title=switch -- $HOME/.local/bin/switch'
+alt-tab = """exec-and-forget kitty \
+--title=aerospace-switch \
+--config $HOME/.config/kitty/program.conf \
+-- $HOME/.local/bin/switch
+"""
+
+alt-shift-tab = """exec-and-forget kitty  \
+--config $HOME/.config/kitty/program.conf \
+--title=aerospace-grab \
+-- $HOME/.local/bin/aerospace-grab.sh
+""""
 
 [mode.service.binding]
 
@@ -212,17 +236,17 @@ k = [
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 s = [
-  'exec-and-forget aerospace-scratchpad.sh org.whispersystems.signal-desktop Signal',
+  'exec-and-forget aerospace-toggle-floating.sh Signal org.whispersystems.signal-desktop',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 m = [
-  'exec-and-forget aerospace-scratchpad.sh com.apple.MobileSMS Messages',
+  'exec-and-forget aerospace-toggle-floating.sh Messages com.apple.MobileSMS',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 w = [
-  'exec-and-forget aerospace-scratchpad.sh net.whatsapp.WhatsApp WhatsApp',
+  'exec-and-forget aerospace-toggle-floating.sh WhatsApp net.whatsapp.WhatsApp',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
@@ -251,12 +275,7 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = "net.kovidgoyal.kitty"
-if.window-title-regex-substring = "toggleterm"
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = "net.kovidgoyal.kitty"
-if.window-title-regex-substring = "switch"
+if.window-title-regex-substring = "aerospace-.*"
 run = 'layout floating'
 
 [[on-window-detected]]
