@@ -150,7 +150,7 @@ cmd-backtick = '''
 exec-and-forget aerospace focus-back-and-forth || 
 aerospace workspace-back-and-forth
 '''
-alt-shift-semicolon = [
+alt-semicolon = [
   'mode service',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=service',
 ]
@@ -173,7 +173,11 @@ alt-shift-tab = """exec-and-forget kitty  \
 --config $HOME/.config/kitty/program.conf \
 --title=aerospace-grab \
 -- $HOME/.local/bin/aerospace-grab.sh
-""""
+"
+"""
+
+alt-minus = 'resize height 40'
+
 
 [mode.service.binding]
 
@@ -197,6 +201,13 @@ j = 'resize height +50'
 k = 'resize height -50'
 l = 'resize width +50'
 b = 'balance-sizes'
+
+minus = [
+  'resize height 40',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 down = 'volume down'

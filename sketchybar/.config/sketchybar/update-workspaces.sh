@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 source ${CONFIG_DIR}/colors/catppuccin-frappe.sh
-
 # quick update workspace color changes
 [ ! -z ${AEROSPACE_FOCUSED_WORKSPACE} ] &&
   sketchybar --set "space.$AEROSPACE_FOCUSED_WORKSPACE" \
@@ -66,20 +65,9 @@ for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep 
   unset IFS
 
   # INFO: add fullscreen color when aerospace implements
-  if [[ $workspace == $AEROSPACE_FOCUSED_WORKSPACE ]]; then
-    background_border_color=${HIGHLIGHT_BORDER_COLOR}
-    text_color=${HIGHLIGHT_TEXT_COLOR}
-  else
-    background_border_color=${DEFAULT_BORDER_COLOR}
-    text_color=${DEFAULT_TEXT_COLOR}
-  fi
-
   sketchybar --set "space.$workspace" \
     drawing=on \
     label="$label" \
     label.font="$label_font" \
-    display="$workspace_display_id" \
-    background.border_color=${background_border_color} \
-    label.color=${text_color} \
-    icon.color=${text_color}
+    display="$workspace_display_id"
 done
