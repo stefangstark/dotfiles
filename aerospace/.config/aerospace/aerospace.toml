@@ -162,17 +162,17 @@ alt-x = [
   'mode disable',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=disabled',
 ]
-alt-backslash = 'exec-and-forget aerospace-toggle-terminal.sh'
+alt-backslash = 'exec-and-forget toggle-terminal.sh'
 
 alt-tab = """exec-and-forget kitty \
 --config $HOME/.config/kitty/program.conf \
 --title=aerospace-switch \
--- $HOME/.local/bin/aerospace-picker.sh switch
+-- picker.sh switch
 """
 alt-shift-tab = """exec-and-forget kitty  \
 --config $HOME/.config/kitty/program.conf \
 --title=aerospace-grab \
--- $HOME/.local/bin/aerospace-picker.sh grab
+-- picker.sh grab
 """
 
 alt-minus = 'resize height 40'
@@ -230,7 +230,7 @@ enter = [
 ]
 shift-m = [
   'exec-and-forget open -a Mail',
-  'exec-and-forget aerospace-toggle-workspace.sh mail',
+  'exec-and-forget toggle-workspace.sh mail',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
@@ -241,22 +241,22 @@ n = [
 ]
 k = [
   'exec-and-forget open -a slack',
-  'exec-and-forget aerospace-toggle-workspace.sh slack',
+  'exec-and-forget toggle-workspace.sh slack',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 s = [
-  'exec-and-forget aerospace-toggle-floating.sh Signal org.whispersystems.signal-desktop',
+  'exec-and-forget toggle-floating.sh Signal org.whispersystems.signal-desktop',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 m = [
-  'exec-and-forget aerospace-toggle-floating.sh Messages com.apple.MobileSMS',
+  'exec-and-forget toggle-floating.sh Messages com.apple.MobileSMS',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 w = [
-  'exec-and-forget aerospace-toggle-floating.sh WhatsApp net.whatsapp.WhatsApp',
+  'exec-and-forget toggle-floating.sh WhatsApp net.whatsapp.WhatsApp',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
@@ -306,4 +306,4 @@ if.window-title-regex-substring = "Library"
 run = 'layout floating'
 
 [exec.env-vars]
-PATH = '${HOME}/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
+PATH = '${HOME}/.config/aerospace/scripts:/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
