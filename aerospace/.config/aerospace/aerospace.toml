@@ -169,12 +169,7 @@ alt-backslash = 'exec-and-forget toggle-terminal.sh'
 alt-tab = """exec-and-forget kitty \
 --config $HOME/.config/kitty/program.conf \
 --title=aerospace-switch \
--- picker.sh switch
-"""
-alt-shift-tab = """exec-and-forget kitty  \
---config $HOME/.config/kitty/program.conf \
---title=aerospace-grab \
--- picker.sh grab
+-- picker.sh
 """
 
 alt-minus = 'resize height 40'

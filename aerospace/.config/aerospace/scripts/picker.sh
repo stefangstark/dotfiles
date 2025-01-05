@@ -1,24 +1,15 @@
 #!/usr/bin/env bash
 
-mode=$1
-
-case "$mode" in
-switch | grab) ;;
-*)
-  echo $mode unknown && exit 1
-  ;;
-esac
-
 # TODO: filter floating windows if added to aerospace list-windows
-target=$(
+read -r mode target <<<$(
   aerospace list-windows --all |
     awk \
       -F '[[:space:]]+\\|[[:space:]]+' \
       '$2 !~ /Messages|Signal|WhatsApp|Mail|Slack/ && $3 !~ /aerospace-/ {print}' |
     fzf \
-      --header "Select window to $mode" \
-      --print0 |
-    awk '{ print $1 }'
+      --header "Enter to switch | Tab to grab" \
+      --bind 'enter:become(echo -n "switch "; echo {} | cut -f 1 -d " ")' \
+      --bind 'tab:become(echo -n "grab "; echo {} | cut -f 1 -d " ")'
 )
 
 [[ -z $target ]] && exit 1
@@ -34,6 +25,7 @@ grab)
   aerospace move-node-to-workspace \
     --window-id $target \
     --focus-follows-window $current_window
+  sketchybar --trigger aerospace_workspace_change
   ;;
 
 *)
