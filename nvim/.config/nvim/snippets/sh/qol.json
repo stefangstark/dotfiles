@@ -1,0 +1,10 @@
+{
+  "shabing": {
+    "prefix": "env",
+    "body": "#!/usr/bin/env bash"
+  },
+  "default variable": {
+    "prefix": "default",
+    "body": "\\${${1:VARIABLE}:-${2:default}}"
+  }
+}

@@ -1,6 +1,0 @@
-{
-  "shabing": {
-    "prefix": "env",
-    "body": "#!/usr/bin/env bash"
-  }
-}
