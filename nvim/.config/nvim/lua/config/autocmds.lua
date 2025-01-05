@@ -27,13 +27,10 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
---
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.tex", "*.md" },
---   command = "hi Conceal guibg=NONE",
--- })
---
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.tex", "*.md" },
---   command = "setlocal wrap",
--- })
+vim.api.nvim_create_autocmd("DirChanged", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_set_option_value("titlestring", "vim " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":~"), {})
+    -- vim.api.nvim_set_option_value("titlestring", vim.fn., opts)
+  end,
+})
