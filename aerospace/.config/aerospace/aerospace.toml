@@ -171,6 +171,12 @@ alt-tab = """exec-and-forget kitty \
 --title=aerospace-switch \
 -- picker.sh
 """
+alt-shift-tab = """exec-and-forget kitty \
+--config $HOME/.config/kitty/program.conf \
+--title=aerospace-switch \
+-- picker.sh projects
+"""
+
 
 alt-minus = 'resize height 40'
 

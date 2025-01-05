@@ -7,6 +7,7 @@ source ${CONFIG_DIR}/colors/catppuccin-frappe.sh
 sketchybar --bar position=top height=34 color=0xff"${COLOR_SURFACE0}"
 sketchybar --add event aerospace_mode_change
 sketchybar --add event aerospace_workspace_change
+sketchybar --add event aerospace_update_unfocused_window
 
 default=(
   padding_left=4
@@ -60,7 +61,7 @@ done
 sketchybar --add item workspace-daemon left \
   --set workspace-daemon drawing=off \
   script=${CONFIG_DIR}/update-workspaces.sh \
-  --subscribe workspace-daemon front_app_switched aerospace_workspace_change
+  --subscribe workspace-daemon front_app_switched aerospace_workspace_change aerospace_update_unfocused_window
 
 sketchybar --add item clock right --set clock \
   update_freq=10 \
