@@ -163,17 +163,16 @@ alt-x = [
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=disabled',
 ]
 alt-backslash = 'exec-and-forget aerospace-toggle-terminal.sh'
-alt-tab = """exec-and-forget kitty \
---title=aerospace-switch \
---config $HOME/.config/kitty/program.conf \
--- $HOME/.local/bin/switch
-"""
 
+alt-tab = """exec-and-forget kitty \
+--config $HOME/.config/kitty/program.conf \
+--title=aerospace-switch \
+-- $HOME/.local/bin/aerospace-picker.sh switch
+"""
 alt-shift-tab = """exec-and-forget kitty  \
 --config $HOME/.config/kitty/program.conf \
 --title=aerospace-grab \
--- $HOME/.local/bin/aerospace-grab.sh
-"
+-- $HOME/.local/bin/aerospace-picker.sh grab
 """
 
 alt-minus = 'resize height 40'

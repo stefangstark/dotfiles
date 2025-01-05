@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-# TODO: option to exclude floating would be nice
-target=$(aerospace list-windows --all | fzf --print0 | awk '{ print $1 }')
-aerospace move-node-to-workspace $target
-aerospace focus --window-id $target
