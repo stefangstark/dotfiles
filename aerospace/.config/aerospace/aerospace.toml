@@ -141,6 +141,8 @@ alt-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
 alt-shift-8 = ['move-node-to-workspace 8', 'workspace 8']
 alt-shift-9 = ['move-node-to-workspace 9', 'workspace 9']
 
+alt-n = 'exec-and-forget move-node-to-empty-workspace.sh'
+
 cmd-esc = 'workspace-back-and-forth'
 alt-backtick = '''
 exec-and-forget aerospace focus-back-and-forth ||

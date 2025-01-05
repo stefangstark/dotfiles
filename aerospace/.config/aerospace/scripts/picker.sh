@@ -15,7 +15,9 @@ target=$(
     awk \
       -F '[[:space:]]+\\|[[:space:]]+' \
       '$2 !~ /Messages|Signal|WhatsApp|Mail|Slack/ && $3 !~ /aerospace-/ {print}' |
-    fzf --header "Select window to $mode" --print0 |
+    fzf \
+      --header "Select window to $mode" \
+      --print0 |
     awk '{ print $1 }'
 )
 
