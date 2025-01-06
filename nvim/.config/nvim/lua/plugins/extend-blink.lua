@@ -10,5 +10,16 @@ return {
       ["<C-h>"] = { "hide" },
     },
     completion = { list = { selection = "manual" } },
+    sources = {
+      providers = {
+        path = {
+          opts = {
+            get_cwd = function()
+              return vim.fn.getcwd()
+            end,
+          },
+        },
+      },
+    },
   },
 }
