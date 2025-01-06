@@ -42,8 +42,9 @@ sketchybar --add item logo left \
 
 workspaces=$(printf "%s\n" $(aerospace list-workspaces --all) mail slack NSP | sort | uniq)
 for sid in $(echo $workspaces); do
-
-  sketchybar --add item space.$sid left \
+  space=left
+  [[ ! $sid =~ [0-9] ]] && space=q
+  sketchybar --add item space.$sid $space \
     --set space.$sid \
     icon.font="Hack Nerd Font:Bold:14.0" \
     label.font="sketchybar-app-font:Normal:12.0" \
@@ -56,6 +57,12 @@ for sid in $(echo $workspaces); do
     drawing=off
 
 done
+
+# add icons for app-based workspaces
+for sid in mail slack; do
+  sketchybar --set space.$sid icon="" icon.drawing=off label=":${sid}:" label.y_offset=0 label.font="sketchybar-app-font:Normal:13.0"
+done
+sketchybar --set space.NSP icon="" icon.drawing=off label=":messages:" label.y_offset=0 label.font="sketchybar-app-font:Normal:13.0"
 
 # HACK: updating bar with events tied to hidden item
 sketchybar --add item workspace-daemon left \

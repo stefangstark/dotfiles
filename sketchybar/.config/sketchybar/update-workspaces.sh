@@ -31,30 +31,29 @@ windows_query_json=$(
 )
 
 source ${CONFIG_DIR}/icon_map.sh
-for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep -v NSP); do
+for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep \[0-9\]); do
 
   workspace_display_id=$(
     echo "$workspace_query_json" |
       jq -r ".[] | select(.workspace == \"$workspace\") | .\"monitor-appkit-nsscreen-screens-id\""
   )
 
-  # Get all the windows in the workspace
+  # INFO: query non-floating windows, if aerospace implements
   windows_in_workspace=$(
     echo "$windows_query_json" |
       jq -r ".[] | select(.workspace == \"$workspace\") | .\"app-name\"" |
-      grep -v -e Messages -e Mail -e Signal -e Slack -e WhatsApp |
+      grep -v -e Messages -e Signal -e WhatsApp |
       sort |
       uniq
   )
 
   # check if any windows in the workspace
-  if [ ! $workspace == $AEROSPACE_FOCUSED_WORKSPACE ] && [ "$windows_in_workspace" = "" ]; then
+  if [ ! $workspace == $AEROSPACE_FOCUSED_WORKSPACE ] && [ -z "$windows_in_workspace" ]; then
     sketchybar --set "space.$workspace" drawing=off
     continue
   fi
 
   label=""
-  label_font="sketchybar-app-font:Normal:12.0"
   # Set IFS to newline to handle multi-word app names correctly
   IFS=$'\n'
   for window in $windows_in_workspace; do
@@ -64,11 +63,11 @@ for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep 
   done
   # Reset IFS to its default value
   unset IFS
+  [[ -z $label ]] && label="—"
 
-  # INFO: add fullscreen color when aerospace implements
+  # INFO: add a fullscreen indicator if aerospace implements
   sketchybar --set "space.$workspace" \
     drawing=on \
     label="$label" \
-    label.font="$label_font" \
     display="$workspace_display_id"
 done
