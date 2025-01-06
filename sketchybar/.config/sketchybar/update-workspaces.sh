@@ -1,14 +1,7 @@
 #!/usr/bin/env bash
 
 source ${CONFIG_DIR}/colors/catppuccin-frappe.sh
-# quick update workspace color changes
-[ ! -z ${AEROSPACE_FOCUSED_WORKSPACE} ] &&
-  sketchybar --set "space.$AEROSPACE_FOCUSED_WORKSPACE" \
-    drawing=on \
-    background.border_color=${HIGHLIGHT_BORDER_COLOR} \
-    label.color=${HIGHLIGHT_TEXT_COLOR} \
-    icon.color=${HIGHLIGHT_TEXT_COLOR}
-
+# Fix colors of active and previously active window
 [ ! -z ${AEROSPACE_PREV_WORKSPACE} ] &&
   sketchybar --set "space.$AEROSPACE_PREV_WORKSPACE" \
     drawing=$([[ $AEROSPACE_PREV_WORKSPACE == [0-9] ]] && echo on || echo off) \
@@ -16,7 +9,15 @@ source ${CONFIG_DIR}/colors/catppuccin-frappe.sh
     label.color=${DEFAULT_TEXT_COLOR} \
     icon.color=${DEFAULT_TEXT_COLOR}
 
-# Those query take a lot of time (100ms)
+[ ! -z ${AEROSPACE_FOCUSED_WORKSPACE} ] &&
+  sketchybar --set "space.$AEROSPACE_FOCUSED_WORKSPACE" \
+    drawing=on \
+    background.border_color=${HIGHLIGHT_BORDER_COLOR} \
+    label.color=${HIGHLIGHT_TEXT_COLOR} \
+    icon.color=${HIGHLIGHT_TEXT_COLOR}
+
+# Draw icons
+# (these query take a lot of time ~100ms)
 AEROSPACE_FOCUSED_WORKSPACE=${AEROSPACE_FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused)}
 workspace_query_json=$(
   aerospace list-workspaces --all \
