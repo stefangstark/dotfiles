@@ -59,7 +59,8 @@ for workspace in $(echo $workspace_query_json | jq -r ".[] | .workspace" | grep 
   for window in $windows_in_workspace; do
     __icon_map "$window"
     icon_result=$icon_result
-    label="$label$icon_result  "
+    # label="$label$icon_result  "
+    [[ -z $label ]] && label="$icon_result" || label="$label  $icon_result"
   done
   # Reset IFS to its default value
   unset IFS
