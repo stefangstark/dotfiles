@@ -17,7 +17,8 @@ plug "zsh-users/zsh-history-substring-search"
 
 # plug "zap-zsh/zap-prompt"
 plug "romkatv/powerlevel10k"
-[ -f "$HOME/.config/zsh/p10k.zsh" ] && source "$HOME/.config/zsh/p10k.zsh"
+[ -f "$HOME/.config/zsh/p10k.zsh" ] &&
+  source "$HOME/.config/zsh/p10k.zsh"
 
 # if command -v bat &> /dev/null; then
 #   alias cat="bat -pp --theme \"Nord\""
@@ -28,7 +29,10 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 bindkey '^l' autosuggest-accept
-bindkey '^\' autosuggest-execute
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS[$ZSH_AUTOSUGGEST_ACCEPT_WIDGETS[(i)vi-forward-char]]=()
+ZSH_AUTOSUGGEST_ACCEPT_WIDGETS[$ZSH_AUTOSUGGEST_ACCEPT_WIDGETS[(i)forward-char]]=()
+
+
 
 bindkey '^k' history-substring-search-up
 bindkey '^j' history-substring-search-down
