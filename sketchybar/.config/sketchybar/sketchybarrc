@@ -3,6 +3,7 @@
 PLUGIN_DIR=${CONFIG_DIR}/plugins
 
 source ${CONFIG_DIR}/colors/catppuccin-frappe.sh
+source ${CONFIG_DIR}/icon_map.sh
 
 sketchybar --bar position=top height=34 color=0xff"${COLOR_SURFACE0}"
 sketchybar --add event aerospace_mode_change
@@ -40,7 +41,7 @@ sketchybar --add item logo left \
   background.drawing=off \
   padding_left=-8
 
-workspaces=$(printf "%s\n" $(aerospace list-workspaces --all) mail slack NSP | sort | uniq)
+workspaces=$(printf "%s\n" $(aerospace list-workspaces --all) Mail Slack Calendar NSP | sort | uniq)
 for sid in $(echo $workspaces); do
   space=left
   [[ ! $sid =~ [0-9] ]] && space=q
@@ -59,10 +60,11 @@ for sid in $(echo $workspaces); do
 done
 
 # add icons for app-based workspaces
-for sid in mail slack; do
-  sketchybar --set space.$sid icon="" icon.drawing=off label=":${sid}:" label.y_offset=0 label.font="sketchybar-app-font:Normal:13.0"
+for sid in Mail Slack Calendar NSP; do
+  __icon_map "$sid"
+  icon_result=$icon_result
+  sketchybar --set space.$sid icon="" icon.drawing=off label="$icon_result" label.y_offset=0 label.font="sketchybar-app-font:Normal:13.0"
 done
-sketchybar --set space.NSP icon="" icon.drawing=off label=":messages:" label.y_offset=0 label.font="sketchybar-app-font:Normal:13.0"
 
 # HACK: updating bar with events tied to hidden item
 sketchybar --add item workspace-daemon left \

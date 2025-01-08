@@ -429,6 +429,9 @@ function __icon_map() {
   "Numbers" | "Numbers 表格")
     icon_result=":numbers:"
     ;;
+  "NSP")
+    icon_result=":messages:"
+    ;;
   "Obsidian")
     icon_result=":obsidian:"
     ;;

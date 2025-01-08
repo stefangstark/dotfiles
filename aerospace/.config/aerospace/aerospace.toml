@@ -233,18 +233,13 @@ enter = [
 ]
 shift-m = [
   'exec-and-forget open -a Mail',
-  'exec-and-forget toggle-workspace.sh mail',
-  'mode main',
-  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
-]
-n = [
-  'exec-and-forget open -na Zen\ Browser.app',
+  'exec-and-forget toggle-workspace.sh Mail',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 k = [
   'exec-and-forget open -a slack',
-  'exec-and-forget toggle-workspace.sh slack',
+  'exec-and-forget toggle-workspace.sh Slack',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
@@ -293,7 +288,7 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = "com.tinyspeck.slackmacgap"
-run = "move-node-to-workspace slack"
+run = "move-node-to-workspace Slack"
 
 [[on-window-detected]]
 if.app-id = "com.apple.finder"
@@ -301,7 +296,7 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = "com.apple.mail"
-run = "move-node-to-workspace mail"
+run = "move-node-to-workspace Mail"
 
 [[on-window-detected]]
 if.app-id = "org.mozilla.com.zen.browser"
