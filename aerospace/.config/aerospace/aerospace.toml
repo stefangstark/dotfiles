@@ -226,6 +226,17 @@ esc = [
 ]
 
 [mode.launch.binding]
+c = [
+  'exec-and-forget open -a calendar',
+  'exec-and-forget toggle-workspace.sh Calendar',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+n = [
+  'exec-and-forget open -na Zen\ Browser.app',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
 enter = [
   'exec-and-forget kitty --single-instance -d ~',
   'mode main',
@@ -302,6 +313,10 @@ run = "move-node-to-workspace Mail"
 if.app-id = "org.mozilla.com.zen.browser"
 if.window-title-regex-substring = "Library"
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "com.apple.iCal"
+run = "move-node-to-workspace Calendar"
 
 [exec.env-vars]
 PATH = '${HOME}/.config/aerospace/scripts:/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
