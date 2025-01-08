@@ -45,6 +45,7 @@ workspace_focused=$(aerospace list-workspaces --focused)
 focused=$(aerospace list-windows --focused --format '%{window-id}')
 
 [[ ! "$window_id" == "$focused" ]] &&
+  aerospace move-node-to-workspace $workspace_focused --window-id $window_id &&
   aerospace focus --window-id $window_id &&
   exit 0
 

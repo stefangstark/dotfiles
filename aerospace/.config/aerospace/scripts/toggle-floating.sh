@@ -18,11 +18,13 @@ target=$(
 )
 window_id=$(echo $target | jq '.["window-id"]')
 
+# Open if unopened
 [[ -z $window_id ]] && open -a "$APP_NAME" && exit 0
 
 workspace=$(echo $target | jq '.["workspace"]')
 workspace_focused=$(aerospace list-workspaces --focused)
 
+# Move app to focus if in NSP
 [[ ${workspace} == \"NSP\" ]] && # No idea why quotes are included
   aerospace move-node-to-workspace $workspace_focused --window-id $window_id &&
   aerospace focus --window-id $window_id &&
@@ -30,8 +32,11 @@ workspace_focused=$(aerospace list-workspaces --focused)
 
 window_focused=$(aerospace list-windows --focused --format '%{window-id}')
 
+# Focus app if unfocused
 [[ ! "$window_id" == "$window_focused" ]] &&
+  aerospace move-node-to-workspace $workspace_focused --window-id $window_id &&
   aerospace focus --window-id $window_id &&
   exit 0
 
+# Move app to NSP
 aerospace move-node-to-workspace NSP --window-id $window_id
