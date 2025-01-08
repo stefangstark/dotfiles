@@ -75,7 +75,7 @@ sketchybar --add item workspace-daemon left \
 sketchybar --add item clock right --set clock \
   update_freq=10 \
   script=${PLUGIN_DIR}/"clock.sh" \
-  padding_right=-8 \
+  padding_right=0 \
   label.font="Lucida Grande:Regular:14.0" \
   icon.drawing=off \
   label.y_offset=0 \
