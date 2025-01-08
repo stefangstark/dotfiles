@@ -9,36 +9,8 @@ plug "$HOME/.config/zsh/zsh-vim.zsh"
 plug "$HOME/.config/zsh/toggle-color-theme.zsh"
 plug "$HOME/.config/zsh/fzf.zsh"
 
-# plug "esc/conda-zsh-completion"
-plug "zsh-users/zsh-autosuggestions"
-plug "zsh-users/zsh-syntax-highlighting"
-plug "zsh-users/zsh-history-substring-search"
+plug "$HOME/.config/zsh/buffer-complete-and-history.zsh"
 
-
-# plug "zap-zsh/zap-prompt"
 plug "romkatv/powerlevel10k"
 [ -f "$HOME/.config/zsh/p10k.zsh" ] &&
   source "$HOME/.config/zsh/p10k.zsh"
-
-# if command -v bat &> /dev/null; then
-#   alias cat="bat -pp --theme \"Nord\""
-#   alias catt="bat --theme \"Nord\""
-# fi
-
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
-bindkey '^l' autosuggest-accept
-ZSH_AUTOSUGGEST_ACCEPT_WIDGETS[$ZSH_AUTOSUGGEST_ACCEPT_WIDGETS[(i)vi-forward-char]]=()
-ZSH_AUTOSUGGEST_ACCEPT_WIDGETS[$ZSH_AUTOSUGGEST_ACCEPT_WIDGETS[(i)forward-char]]=()
-
-
-
-bindkey '^k' history-substring-search-up
-bindkey '^j' history-substring-search-down
-
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
-HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bold'
-HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
