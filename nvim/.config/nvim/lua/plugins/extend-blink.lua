@@ -9,7 +9,7 @@ return {
       ["<C-k>"] = { "select_prev", "fallback" },
       ["<C-h>"] = { "hide" },
     },
-    completion = { list = { selection = "manual" } },
+    completion = { list = { selection = { preselect = true, auto_insert = false } } },
     sources = {
       providers = {
         path = {
