@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# TODO: add project name flag
+project=$(basename $PWD)
+for opt; do
+  [[ $opt == "--find" ]] && select=find && continue
+  [[ $opt == "--pytest" ]] && select=pytest && continue
+  [[ $select == "find" ]] && findargs+=("$opt")
+  [[ $select == "pytest" ]] && pytestargs+=("$opt")
+done
+
+on_exit() {
+  sketchybar --set '/pytest-.*/' drawing=off
+}
+
+trap 'on_exit' EXIT
+
+find "${findargs[@]}" |
+  entr $HOME/.config/sketchybar/plugins/pytest.sh $project "${pytestargs[@]}"

@@ -101,4 +101,15 @@ sketchybar --add item aerospace-mode q --set aerospace-mode \
   script=${PLUGIN_DIR}/"aerospace_mode.sh" \
   --subscribe aerospace-mode aerospace_mode_change
 
+sketchybar \
+  --add item pytest-env e \
+  --add item pytest-passed e \
+  --add item pytest-failed e \
+  --set pytest-passed \
+  icon= icon.font="Hack Nerd Font:Bold:14.0" drawing=off \
+  label.color="0xDD${COLOR_GREEN}" icon.color="0xDD${COLOR_GREEN}" \
+  --set pytest-failed \
+  icon= icon.font="Hack Nerd Font:Bold:14.0" drawing=off \
+  label.color="0xDD${COLOR_RED}" icon.color="0xDD${COLOR_RED}"
+
 sketchybar --update
