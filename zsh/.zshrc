@@ -14,3 +14,15 @@ plug "$HOME/.config/zsh/buffer-complete-and-history.zsh"
 plug "romkatv/powerlevel10k"
 [ -f "$HOME/.config/zsh/p10k.zsh" ] &&
   source "$HOME/.config/zsh/p10k.zsh"
+
+activate_venv_on_cd() {
+    local venv_dir=".venv"
+    if [[ -d "$PWD/$venv_dir" ]]; then
+        source "$PWD/$venv_dir/bin/activate"
+    else
+      [[ ! -z $VIRTUAL_ENV ]] && deactivate
+    fi
+}
+
+autoload -U add-zsh-hook
+add-zsh-hook chpwd activate_venv_on_cd
