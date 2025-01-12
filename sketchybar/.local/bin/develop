@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
 
+cleanup() {
+  # remove items from sketchybar
+  sketchybar --set '/pytest-.*/' drawing=off
+
+  # kill all processes whose parent is this process
+  pkill -P $$
+}
+
+for sig in INT QUIT HUP TERM; do
+  trap "
+    cleanup
+    trap - $sig EXIT
+    kill -s $sig "'"$$"' "$sig"
+done
+
+trap cleanup EXIT
+
 # TODO: add project name flag
 project=$(basename $PWD)
 for opt; do
@@ -9,11 +26,5 @@ for opt; do
   [[ $select == "pytest" ]] && pytestargs+=("$opt")
 done
 
-on_exit() {
-  sketchybar --set '/pytest-.*/' drawing=off
-}
-
-trap 'on_exit' EXIT
-
 find "${findargs[@]}" |
-  entr $HOME/.config/sketchybar/plugins/pytest.sh $project "${pytestargs[@]}"
+  entr -n $HOME/.config/sketchybar/plugins/pytest.sh $project "${pytestargs[@]}"
