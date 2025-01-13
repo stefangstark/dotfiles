@@ -27,6 +27,16 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+vim.api.nvim_create_autocmd("User", {
+  pattern = "PersistenceLoadPre",
+  callback = function()
+    local bufs = vim.api.nvim_list_bufs()
+    for _, i in ipairs(bufs) do
+      vim.api.nvim_buf_delete(i, {})
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd("DirChanged", {
   pattern = "*",
   callback = function()
