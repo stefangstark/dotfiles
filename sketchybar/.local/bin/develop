@@ -1,5 +1,28 @@
 #!/usr/bin/env bash
 
+while [[ "$#" -gt 0 ]]; do
+
+  [[ "$1" == "--find" ]] && select=find && shift && continue
+  [[ "$select" == "find" ]] && findargs+=("$1") && shift && continue
+
+  [[ "$1" == "--pytest" ]] && select=pytest && shift && continue
+  [[ "$select" == "pytest" ]] && pytestargs+=("$1") && shift && continue
+
+  case "$1" in
+  -p | --project)
+    project="$2"
+    shift
+    ;;
+  *)
+    echo unknwon arg $1 && exit 1
+    ;;
+  esac
+  shift
+
+done
+
+project=${project:-$(basename $PWD)}
+
 cleanup() {
   # remove items from sketchybar
   sketchybar --set '/pytest-.*/' drawing=off
@@ -16,15 +39,6 @@ for sig in INT QUIT HUP TERM; do
 done
 
 trap cleanup EXIT
-
-# TODO: add project name flag
-project=$(basename $PWD)
-for opt; do
-  [[ $opt == "--find" ]] && select=find && continue
-  [[ $opt == "--pytest" ]] && select=pytest && continue
-  [[ $select == "find" ]] && findargs+=("$opt")
-  [[ $select == "pytest" ]] && pytestargs+=("$opt")
-done
 
 find "${findargs[@]}" |
   entr -n $HOME/.config/sketchybar/plugins/pytest.sh $project "${pytestargs[@]}"
