@@ -20,18 +20,6 @@ stow */ # Everything (the '/' ignores the README)
 stow zsh # Just my zsh config
 ```
 
-MacOS
-
-All of my packages for MacOS can be found in `brew/.Brewfile`
-
-- Install
-
-```
-stow ~/.machfiles/brew
-
-brew bundle --global
-```
-
 ## Fresh set up
 see [here](https://www.chrisatmachine.com/posts/01-macos-developer-setup)
 
