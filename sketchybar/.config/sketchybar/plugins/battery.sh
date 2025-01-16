@@ -12,7 +12,7 @@ fi
 case "${PERCENTAGE}" in
 100)
   ICON="􀛨"
-  ICON_COLOR=0xff${COLOR_GREEN}
+  ICON_COLOR=0xBB${COLOR_GREEN}
   ;;
 9[0-9])
   ICON="􀛨"

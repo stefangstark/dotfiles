@@ -177,6 +177,16 @@ alt-shift-tab = """exec-and-forget kitty \
 -- picker.sh projects
 """
 
+alt-shift-s = [
+  'exec-and-forget toggle-floating.sh Signal org.whispersystems.signal-desktop',
+]
+alt-shift-m = [
+  'exec-and-forget toggle-floating.sh Messages com.apple.MobileSMS',
+]
+alt-shift-w = [
+  'exec-and-forget toggle-floating.sh WhatsApp net.whatsapp.WhatsApp',
+]
+
 
 alt-minus = 'resize height 40'
 
