@@ -8,6 +8,10 @@ projects)
     sort -n
   ;;
 
+all)
+  aerospace list-windows --all | sort -n
+  ;;
+
 *)
   aerospace list-windows --all |
     awk \
