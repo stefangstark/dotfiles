@@ -174,7 +174,7 @@ alt-tab = """exec-and-forget kitty \
 alt-shift-tab = """exec-and-forget kitty \
 --config $HOME/.config/kitty/program.conf \
 --title=aerospace-switch \
--- picker.sh projects
+-- picker.sh all 
 """
 
 alt-shift-s = [
@@ -237,8 +237,7 @@ esc = [
 
 [mode.launch.binding]
 c = [
-  'exec-and-forget open -a calendar',
-  'exec-and-forget toggle-workspace.sh Calendar',
+  'exec-and-forget toggle-workspace.sh Calendar com.apple.iCal',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
@@ -253,14 +252,12 @@ enter = [
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 shift-m = [
-  'exec-and-forget open -a Mail',
-  'exec-and-forget toggle-workspace.sh Mail',
+  'exec-and-forget toggle-workspace.sh Mail com.apple.mail',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 k = [
-  'exec-and-forget open -a slack',
-  'exec-and-forget toggle-workspace.sh Slack',
+  'exec-and-forget toggle-workspace.sh Slack com.tinyspeck.slackmacgap',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
