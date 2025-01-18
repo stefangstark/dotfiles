@@ -13,6 +13,7 @@ git clone https://github.com/stefangstark/dotfiles.git ~/.dotfiles
 Run `stow` to symlink everything or just select what you want
 
 ```bash
+cd ~/.dotfiles
 stow */ # Everything (the '/' ignores the README)
 ```
 
