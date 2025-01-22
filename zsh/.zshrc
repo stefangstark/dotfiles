@@ -26,3 +26,5 @@ activate_venv_on_cd() {
 
 autoload -U add-zsh-hook
 add-zsh-hook chpwd activate_venv_on_cd
+
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET"
