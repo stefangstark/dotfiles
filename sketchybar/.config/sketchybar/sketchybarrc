@@ -104,9 +104,10 @@ sketchybar --add item battery right --set battery \
 rm $HOME/.local/state/sketchybar/network.out
 
 sketchybar --add item ip_address right \
-  --set ip_address script="$PLUGIN_DIR/wifi.sh" \
-  update_freq=30 \
-  padding_right=0 \
+  --set ip_address \
+  icon.y_offset=-0.5 \
+  icon.font="Hack Nerd Font:Regular:15.0" \
+  script="$PLUGIN_DIR/wifi.sh" update_freq=30 \
   --subscribe ip_address wifi_change mouse.entered mouse.exited \
   \
   --add item network.up right \
