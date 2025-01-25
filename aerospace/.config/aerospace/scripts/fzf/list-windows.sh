@@ -12,6 +12,14 @@ all)
   aerospace list-windows --all | sort -n
   ;;
 
+toggles)
+  aerospace list-windows --all |
+    awk \
+      -F '[[:space:]]+\\|[[:space:]]+' \
+      '$2 ~ /Messages|Signal|WhatsApp/ || $3 ~ /aerospace-/ {print}' |
+    sort -n
+  ;;
+
 *)
   aerospace list-windows --all |
     awk \

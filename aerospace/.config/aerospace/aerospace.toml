@@ -187,6 +187,8 @@ alt-shift-w = [
   'exec-and-forget toggle-floating.sh WhatsApp net.whatsapp.WhatsApp',
 ]
 
+alt-shift-backtick = 'exec-and-forget clear-toggles.sh'
+
 
 alt-minus = 'resize height 40'
 

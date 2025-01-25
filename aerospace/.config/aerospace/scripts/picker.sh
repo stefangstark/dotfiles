@@ -7,13 +7,13 @@ MODE=$1
 read -r mode target <<<$(
   fzf \
     --header $'Actions: <enter> to switch | <tab> to grab | <ctrl-x> to close\nModes: <ctrl-r> normal | <ctrl-p> projects | <ctrl-a> all' \
-    --bind "start:reload(${WDIR}/list-non-floating-windows.sh $MODE)" \
+    --bind "start:reload(${WDIR}/list-windows.sh $MODE)" \
     --bind 'enter:become(echo -n "switch "; echo {} | cut -f 1 -d " ")' \
     --bind 'tab:become(echo -n "grab "; echo {} | cut -f 1 -d " ")' \
-    --bind "ctrl-x:execute-silent(${WDIR}/close-window.sh {})+reload(${WDIR}/list-non-floating-windows.sh $MODE)" \
-    --bind "ctrl-p:reload(${WDIR}/list-non-floating-windows.sh projects)" \
-    --bind "ctrl-a:reload(${WDIR}/list-non-floating-windows.sh all)" \
-    --bind "ctrl-r:reload(${WDIR}/list-non-floating-windows.sh)"
+    --bind "ctrl-x:execute-silent(${WDIR}/close-window.sh {})+reload(${WDIR}/list-windows.sh $MODE)" \
+    --bind "ctrl-p:reload(${WDIR}/list-windows.sh projects)" \
+    --bind "ctrl-a:reload(${WDIR}/list-windows.sh all)" \
+    --bind "ctrl-r:reload(${WDIR}/list-windows.sh)"
 
 )
 
