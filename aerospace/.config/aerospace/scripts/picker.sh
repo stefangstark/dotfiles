@@ -1,10 +1,13 @@
+#!/usr/bin/env bash
+
 # TODO: filter floating windows if added to aerospace list-windows
 
 # fzf execute runs as an external shell
+# all "bind" targets need to be externally accessible
 WDIR="$(dirname "$(realpath "$0")")/fzf"
 MODE=$1
 
-read -r mode target <<<$(
+read -r action target <<<$(
   fzf \
     --header $'Actions: <enter> to switch | <tab> to grab | <ctrl-x> to close\nModes: <ctrl-r> normal | <ctrl-p> projects | <ctrl-a> all' \
     --bind "start:reload(${WDIR}/list-windows.sh $MODE)" \
@@ -19,7 +22,7 @@ read -r mode target <<<$(
 
 [[ -z $target ]] && exit 1
 
-case "$mode" in
+case "$action" in
 switch)
   aerospace move-node-to-workspace $target
   aerospace focus --window-id $target

@@ -166,16 +166,9 @@ alt-x = [
 ]
 alt-backslash = 'exec-and-forget toggle-terminal.sh'
 
-alt-tab = """exec-and-forget kitty \
---config $HOME/.config/kitty/program.conf \
---title=aerospace-switch \
--- picker.sh
-"""
-alt-shift-tab = """exec-and-forget kitty \
---config $HOME/.config/kitty/program.conf \
---title=aerospace-switch \
--- picker.sh all 
-"""
+alt-tab = "exec-and-forget launch-picker.sh"
+
+alt-shift-tab = "exec-and-forget launch-picker.sh all"
 
 alt-shift-s = [
   'exec-and-forget toggle-floating.sh Signal org.whispersystems.signal-desktop',
