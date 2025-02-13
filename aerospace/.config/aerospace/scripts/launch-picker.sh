@@ -8,6 +8,6 @@ MODE=$1
   exit 0
 
 kitty \
-  --config $HOME/.config/kitty/program.conf \
+  --config "$HOME"/.config/kitty/program.conf \
   --title=aerospace-switch \
-  picker.sh $MODE
+  picker.sh "$MODE"
