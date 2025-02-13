@@ -1,3 +1,8 @@
+local function show_todos()
+  vim.cmd('silent grep! "\\[ \\] \\#task" **/*.md')
+  require("trouble").toggle("quickfix")
+end
+
 return {
   "epwalsh/obsidian.nvim",
   version = "*", -- recommended, use latest release instead of latest commit
@@ -34,6 +39,12 @@ return {
         [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
         ["x"] = { char = "", hl_group = "ObsidianDone" },
       },
+    },
+  },
+  keys = {
+    {
+      "|",
+      show_todos,
     },
   },
 }
