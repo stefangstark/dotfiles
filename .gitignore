@@ -2,3 +2,4 @@ zsh/.config/zsh/zhistory
 ipython/.config/.ipython/profile_default/history.sqlite
 kitty/.config/kitty/kitty.conf.bak
 ipython/.config/.ipython/profile_default/db/dhist
+.DS_Store
