@@ -231,13 +231,18 @@ esc = [
 ]
 
 [mode.launch.binding]
-c = [
-  'exec-and-forget toggle-workspace.sh Calendar com.apple.iCal',
+o = [
+  'exec-and-forget toggle-workspace.sh Obsidian md.obsidian',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
 n = [
   'exec-and-forget open -na Zen\ Browser.app',
+  'mode main',
+  'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
+]
+c = [
+  'exec-and-forget toggle-workspace.sh Calendar com.apple.iCal',
   'mode main',
   'exec-and-forget sketchybar --trigger aerospace_mode_change AEROSPACE_MODE=main',
 ]
@@ -319,6 +324,14 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = "com.apple.iCal"
 run = "move-node-to-workspace Calendar"
+
+[[on-window-detected]]
+if.app-id = "md.obsidian"
+run = "move-node-to-workspace Obsidian"
+
+[[on-window-detected]]
+if.app-id = "com.hnc.Discord"
+run = "move-node-to-workspace Discord"
 
 [exec.env-vars]
 PATH = '${HOME}/.config/aerospace/scripts:/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
