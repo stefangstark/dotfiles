@@ -10,6 +10,8 @@ sketchybar --add event aerospace_mode_change
 sketchybar --add event aerospace_workspace_change
 sketchybar --add event aerospace_update_unfocused_window
 
+named_workspaces=$(<app-workspaces.txt)
+
 default=(
   padding_left=4
   padding_right=4
@@ -42,7 +44,7 @@ sketchybar --add item logo left \
   padding_left=-8
 
 # TODO: factor out apps to txt file
-workspaces=$(printf "%s\n" $(aerospace list-workspaces --all) Mail Slack Calendar NSP Discord Obsidian | sort | uniq)
+workspaces=$(printf "%s\n" $(aerospace list-workspaces --all) $named_workspaces | sort | uniq)
 for sid in $(echo $workspaces); do
   space=left
   [[ ! $sid =~ [0-9] ]] && space=q
@@ -62,7 +64,7 @@ done
 
 # add icons for app-based workspaces
 # TODO: factor out apps to txt file
-for sid in Mail Slack Calendar Obsidian Discord NSP; do
+for sid in ${named_workspaces}; do
   __icon_map "$sid"
   icon_result=$icon_result
   sketchybar --set space.$sid icon="" icon.drawing=off label="$icon_result" label.y_offset=0 label.font="sketchybar-app-font:Normal:13.0"
