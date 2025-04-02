@@ -1,4 +1,5 @@
 #! /bin/bash
+
 export PATH="/bin:$HOME/.local/bin:$PATH"
 export ZHISTDIR="$HOME/.zhistory"
 export HISTFILE="$ZHISTDIR/zhistory.zsh"
@@ -16,6 +17,10 @@ eval "$(zoxide init zsh)"
 eval "$(direnv hook zsh)"
 export DIRENV_LOG_FORMAT=
 [ -f .envrc ] && direnv reload
+
+# use neovim as manpager
+export MANPAGER='nvim +Man!'
+export MANWIDTH=999
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
